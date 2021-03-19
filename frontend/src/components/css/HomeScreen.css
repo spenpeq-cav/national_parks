@@ -1,0 +1,45 @@
+.main-container{
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-container h1{
+    margin-top: 160px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-size: 40px;
+}
+
+.main-container img{
+    height: 100%;
+    width: 100%;
+    max-height: 1000px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    display: flex;
+}
+
+.main-container .button{
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: black;
+    border: 2px solid #000000a4;
+    border-radius: 5px;
+}
+
+.main-container .button:hover {
+    background-color: #5555554b;
+  }
