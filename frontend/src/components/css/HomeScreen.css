@@ -3,6 +3,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-image: url('https://sgl-assets.imgix.net/files/article_hero/top-things-do-yosemite-national-park-via-magazine-shutterstock_758607316.jpg?h=61ce19a1&itok=bX4XJbAO?w=1200h=630&crop=faces,edges');
+    box-shadow: 25px 25px 50px 5px rgba(51, 51, 51, 0.40) inset, -25px -25px 50px 50px rgb(51, 51, 51, 0.40) inset;
 }
 
 .main-container h1{
@@ -10,17 +14,6 @@
     margin-bottom: 5px;
     text-transform: uppercase;
     font-size: 40px;
-}
-
-.main-container img{
-    height: 100%;
-    width: 100%;
-    max-height: 1000px;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: -1;
-    display: flex;
 }
 
 .main-container .button{
@@ -41,5 +34,71 @@
 }
 
 .main-container .button:hover {
-    background-color: #5555554b;
-  }
+    background-color: rgba(51, 51, 51, 0.281);
+}
+
+
+
+
+
+
+.popular-container{
+    height: 800px;
+    background-color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.popular-container h1{
+    margin: 0;
+    padding: 40px 10px;
+    text-transform: uppercase;
+    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+
+
+* {
+    box-sizing: border-box;
+}
+  
+  /* Float four columns side by side */
+.column {
+    float: left;
+    width: 33.33333333%;
+    padding: 0 20px;
+}
+  
+  /* Remove extra left and right margins, due to padding in columns */
+.row {
+    padding: 50px 50px;
+}
+  
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+  
+  /* Style the counter cards */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-color: #f1f1f1;
+}
+  
+  /* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+      display: block;
+      margin-bottom: 20px;
+    }
+}
