@@ -9,7 +9,7 @@ function HomeScreen() {
         <section>
             <div className="main-container">
                 <h1>All National Parks</h1>
-                <p>Explore information on all national parks. View activites, ticket fees, parking, and more!</p>
+                <p>Explore information on all national parks and services. View activites, ticket fees, parking, and more!</p>
                 <Link className="button" to="/explore">Explore Parks</Link>
             </div>
             <div className="popular-container">
