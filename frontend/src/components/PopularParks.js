@@ -20,8 +20,6 @@ function PopularParks() {
                 setPopularParkData(res.data)
                 setLoaded(true)})
             .catch(error => console.log(error))
-        
-        console.log('Fetching data...')
     }, [])
     return (
         <div>
