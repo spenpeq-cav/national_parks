@@ -24,26 +24,55 @@ function ParkScreen({ match }) {
         getData()
     }, [])
 
-
+    console.log(data)
     return (
         <div>
             { loaded ? (
-                <div className="carousel-container">
-                    <Carousel width={650} showArrows={true} selectedItem={0} swipable={true} swipeScrollTolerance={5} swipeScrollTolerance={5} autoPlay={true} infiniteLoop={true} stopOnHover={true} interval={5000} transitionTime={500} dynamicHeight={true}>
-                        <div>
-                            <img className="carousel-image" src={data.images[0].url} />
-                            <p className="legend">{data.images[0].caption}</p>
+                    <div className="row">
+                        <div className="column">
+                            <Carousel width={650} showArrows={true} selectedItem={0} swipable={true} swipeScrollTolerance={5} swipeScrollTolerance={5} autoPlay={true} infiniteLoop={true} stopOnHover={true} interval={5000} transitionTime={500} dynamicHeight={false}>
+                                {data.images.map((img) => 
+                                    <div key={data.topics.index}>
+                                        <img src={img.url} />
+                                        <p className="legend">{img.caption}</p>
+                                    </div>)}
+                            </Carousel>
                         </div>
-                        <div>
-                            <img src={data.images[1].url} />
-                            <p className="legend">{data.images[1].caption}</p>
+                        <div className="column info-column">
+                            <div className="info-box">
+                                <h2>{data.fullName}</h2>
+                                <p>{data.description}</p>
+                                <p>Located in the state(s): {data.states}</p>
+                                <p>{data.directionsInfo}</p>
+                            </div>
+                            <div className="info-box">
+                                <h3>Activities</h3>
+                                <ui>
+                                    {data.activities.map((act) => 
+                                    <li key={data.activities.index}>
+                                        {act.name}
+                                    </li>)}
+                                </ui>
+                            </div>
+                            <div className="info-box">
+                                <h3>Topics</h3>
+                                <ui>
+                                    {data.topics.map((act) => 
+                                    <li key={data.topics.index}>
+                                        {act.name}
+                                    </li>)}
+                                </ui>
+                            </div>
+                            <div className="info-box">
+                                <h3><i class="fas fa-phone-square-alt"></i> Contact</h3>
+                                <p>{data.contacts.emailAddresses[0].description}</p>
+                                <p><b>Email:</b> {data.contacts.emailAddresses[0].emailAddress}</p>
+                                <p><b>Phone Number:</b> {data.contacts.phoneNumbers[0].phoneNumber}</p>
+                            </div>
                         </div>
-                        <div>
-                            <img src={data.images[2].url} />
-                            <p className="legend">{data.images[2].caption}</p>
-                        </div>
-                    </Carousel>
-                </div>
+                    </div>
+                    
+                
             ) : <div><h1>Loading ...</h1></div>}
             
             

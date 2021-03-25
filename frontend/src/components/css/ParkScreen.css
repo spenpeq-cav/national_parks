@@ -1,7 +1,45 @@
-.carousel-container{
-    background-color: lawngreen;
+.content-container{
     
 }
-.carousel-image{
-   
+
+.carousel-root{
+    margin-right: 100px;
+}
+.carousel, .carousel-slider {
+    width: 500px;
+}
+
+.row {
+    display: flex;
+    background-color: grey;
+}
+  
+.column {
+    flex: 50%;
+}
+
+.info-column{
+    text-align: center;
+}
+
+.info-column h1, h2{
+    margin-top: 0;
+}
+
+.info-column p{
+    text-align: justify;
+    padding: 0 10px;
+}
+
+.info-column li{
+    float: left;
+    display: inline;
+    width: 33.333333%;
+    padding: 3px 0;
+}
+
+.info-box{
+    overflow: auto;
+    border-bottom: 5px solid rgb(32, 32, 32);
+    height: 250px;
 }
