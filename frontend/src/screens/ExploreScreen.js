@@ -10,22 +10,28 @@ function ExploreScreen() {
   const [perPage] = useState(8)
   const [pageCount, setPageCount] = useState(0)
 
+  const [filterNPOnly, setFilterNPOnly] = useState(false)
+
   const base_url = 'https://developer.nps.gov/api/v1'
-  const endpoint_url = '/parks?limit=600&api_key=' + process.env.REACT_APP_API_KEY
-  const url = base_url + endpoint_url
+  var endpoint_url = '/parks?limit=600&api_key=' + process.env.REACT_APP_API_KEY
+  var url = base_url + endpoint_url
 
   const getData = async() => {
+    if(filterNPOnly){
+      endpoint_url = '/parks?parkCode=yell&api_key=' + process.env.REACT_APP_API_KEY
+      url = base_url + endpoint_url
+    }
     const res = await axios.get(url)
     const data = res.data.data
-    console.log(data)
     const slice = data.slice(offset, offset+perPage)
-    console.log(slice)
     const postData = slice.map(park => 
       <div key={park.id}>
         <h5>{park.fullName}</h5>
-        <img src={park.images[0].url}></img>
-        <p>{park.description}</p>
-        <Link className="button-explore" to={`/explore/${park.parkCode}`}>More Info</Link>
+        <Link>
+          <img src={park.images[0].url}></img>
+        </Link>
+        {/* <p>{park.description}</p>
+        <Link className="button-explore" to={`/explore/${park.parkCode}`}>More Info</Link> */}
       </div>)
     setData(postData)
     setPageCount(Math.ceil(data.length / perPage))
@@ -43,13 +49,20 @@ function ExploreScreen() {
 
   useEffect(() => {
     getData()
-  }, [offset])
+  }, [offset, filterNPOnly])
 
   
   return (
     <div>
       <div className='main-explore'>
         <h2>Explore All National Park Services</h2>
+        <div className='button-container'>
+          <div class="vertical-center">
+            <input type="button" onClick={() => setFilterNPOnly(false)} value="All"></input>
+            <input type="button" onClick={() => setFilterNPOnly(true)} value="National Parks"></input>
+            <p>Filter : {String(filterNPOnly)}</p>
+          </div>
+        </div>
         <div className='container-explore'>
           <div className='card-explore'>
             {data[0]}

@@ -41,6 +41,25 @@
     padding-top: 25px;
 }
 
+.button-container{
+    position: relative;
+    height: 30px;
+}
+.button-container p{
+    color:blanchedalmond;
+    margin: 0;
+    padding: 0;
+    float:right;
+}
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
 .container-explore{
     background-color: rgb(0, 0, 0);
     display: flex;
@@ -52,14 +71,14 @@
     flex: 1;
     box-shadow: 0 4px 2px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    background-color: rgb(184, 184, 184);
-    margin: 25px 10px;
+    margin: 10px 10px;
     position: relative;
-    height: 31rem;
 }
 
 .card-explore h5{
     text-align: center;
+    color: white;
+    margin: 15px 0;
 }
 
 .card-explore img{
@@ -102,3 +121,4 @@
 .button-explore:hover {
     background-color: rgb(85, 122, 68);
 }
+
