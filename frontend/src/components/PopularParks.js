@@ -30,27 +30,27 @@ function PopularParks() {
                         <div class="column">
                             <div class="card">
                                 <h2>{popularParkData[0].name}</h2>
-                                <img src={popularParkData[0].images[1].url}/>
-                                <p>{popularParkData[0].description}</p>
-                                <Link className="button" to={`/explore/${popularParkData[0].parkCode}`}>View More Info</Link>   
+                                <Link className="button" to={`/explore/${popularParkData[0].parkCode}`}>
+                                    <img src={popularParkData[0].images[1].url}/>
+                                </Link>   
                             </div>
                         </div>
 
                         <div class="column">
                             <div class="card">
                                 <h2>{popularParkData[1].name}</h2>
-                                <img src={popularParkData[1].images[1].url}/>
-                                <p>{popularParkData[1].description}</p>
-                                <Link className="button" to={`/explore/${popularParkData[1].parkCode}`}>View More Info</Link>
+                                <Link className="button" to={`/explore/${popularParkData[1].parkCode}`}>
+                                    <img src={popularParkData[1].images[1].url}/>
+                                </Link>
                             </div>
                         </div>
 
                         <div class="column">
                             <div class="card">
                                 <h2>{popularParkData[2].name}</h2>
-                                <img src={popularParkData[2].images[0].url}/>
-                                <p>{popularParkData[2].description}</p>
-                                <Link className="button" to={`/explore/${popularParkData[2].parkCode}`}>View More Info</Link>
+                                <Link className="button" to={`/explore/${popularParkData[2].parkCode}`}>
+                                    <img src={popularParkData[2].images[0].url}/>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -59,27 +59,27 @@ function PopularParks() {
                         <div class="column">
                             <div class="card">
                                 <h2>{popularParkData[3].name}</h2>
-                                <img src={popularParkData[3].images[2].url}/>
-                                <p>{popularParkData[3].description}</p>
-                                <Link className="button" to={`/explore/${popularParkData[3].parkCode}`}>View More Info</Link>
+                                <Link className="button" to={`/explore/${popularParkData[3].parkCode}`}>
+                                    <img src={popularParkData[3].images[2].url}/>
+                                </Link>
                             </div>
                         </div>
 
                         <div class="column">
                             <div class="card">
                                 <h2>{popularParkData[4].name}</h2>
-                                <img src={popularParkData[4].images[3].url}/>
-                                <p>{popularParkData[4].description}</p>
-                                <Link className="button" to={`/explore/${popularParkData[4].parkCode}`}>View More Info</Link>
+                                <Link className="button" to={`/explore/${popularParkData[4].parkCode}`}>
+                                    <img src={popularParkData[4].images[3].url}/>
+                                </Link>
                             </div>
                         </div>
 
                         <div class="column">
                             <div class="card">
                                 <h2>{popularParkData[5].name}</h2>
-                                <img src={popularParkData[5].images[4].url}/>
-                                <p>{popularParkData[5].description}</p>
-                                <Link className="button" to={`/explore/${popularParkData[5].parkCode}`}>View More Info</Link>
+                                <Link className="button" to={`/explore/${popularParkData[5].parkCode}`}>
+                                    <img src={popularParkData[5].images[4].url}/>
+                                </Link>
                             </div>
                         </div>
                     </div>
