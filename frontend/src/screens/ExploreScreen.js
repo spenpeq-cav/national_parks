@@ -27,7 +27,7 @@ function ExploreScreen() {
     const postData = slice.map(park => 
       <div key={park.id}>
         <h5>{park.fullName}</h5>
-        <Link>
+        <Link to={`/explore/${park.parkCode}`}>
           <img src={park.images[0].url}></img>
         </Link>
         {/* <p>{park.description}</p>

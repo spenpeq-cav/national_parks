@@ -2,6 +2,10 @@
     
 }
 
+.carousel .slide img {
+    width: 75%;
+}
+
 .carousel-root{
     margin-right: 100px;
 }
@@ -20,6 +24,7 @@
 
 .info-column{
     text-align: center;
+    color: white;
 }
 
 .info-column h1, h2{
