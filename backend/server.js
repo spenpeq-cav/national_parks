@@ -4,6 +4,8 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
+app.use(express.static(__dirname + 'frontend/build'));
+
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
