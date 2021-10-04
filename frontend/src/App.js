@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Header />
-      <Route path='/' component={BackendTest} exact />
+      <Route path='/' component={HomeScreen} exact />
       <Route path='/explore' component={ExploreScreen} exact/>
       <Route path='/explore/:parkcode' component={ParkScreen} />
       <Route path='/server' component={BackendTest} />
