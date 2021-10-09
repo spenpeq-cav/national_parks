@@ -8,6 +8,7 @@ import HomeScreen from './screens/HomeScreen';
 import ExploreScreen from './screens/ExploreScreen';
 import ParkScreen from './screens/ParkScreen';
 import BackendTest from './screens/BackendTest';
+import TailWindTest from './screens/TailWindTest';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path='/explore' component={ExploreScreen} exact/>
       <Route path='/explore/:parkcode' component={ParkScreen} />
       <Route path='/server' component={BackendTest} />
+      <Route path='/tailwind' component={TailWindTest} />
       <Footer />
     </Router> 
   );
