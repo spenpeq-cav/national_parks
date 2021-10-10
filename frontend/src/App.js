@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import Header from './components/Header'
+import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
 import HomeScreen from './screens/HomeScreen';
@@ -13,7 +13,7 @@ import TailWindTest from './screens/TailWindTest';
 function App() {
   return (
     <Router>
-      <Header />
+      <Navbar />
       <Route path='/' component={HomeScreen} exact />
       <Route path='/explore' component={ExploreScreen} exact/>
       <Route path='/explore/:parkcode' component={ParkScreen} />

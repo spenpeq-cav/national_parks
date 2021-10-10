@@ -44,45 +44,38 @@ function PopularParks() {
         <div>
             
             { loaded ? (
-                <div>
-                    <div class="row">
-                        <div class="column">
-                            <div class="card">
-                                <h2>{popularParkData[0].name}</h2>
-                                <Link className="button" to={`/explore/${popularParkData[0].parkCode}`}>
-                                    <img src={popularParkData[0].images[1].url}/>
-                                </Link>   
+                <div className="grid grid-cols-3 gap-4">
+                   <div className="my-5 py-16 px-12 w-full relative">
+                        <Link className="" to={`/explore/${popularParkData[0].parkCode}`}>
+                            <div className="group">
+                                <img className="popular-home-card" src={popularParkData[0].images[0].url}/>
+                                <div className="popular-home-card-text">{popularParkData[0].name}</div>
                             </div>
-                        </div>
-
-                        <div class="column">
-                            <div class="card">
-                                <h2>{popularParkData[1].name}</h2>
-                                <Link className="button" to={`/explore/${popularParkData[1].parkCode}`}>
-                                    <img src={popularParkData[1].images[1].url}/>
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div class="column">
-                            <div class="card">
-                                <h2>{popularParkData[2].name}</h2>
-                                <Link className="button" to={`/explore/${popularParkData[2].parkCode}`}>
-                                    <img src={popularParkData[2].images[0].url}/>
-                                </Link>
-                            </div>
-                        </div>
+                        </Link>   
                     </div>
-
+                    <div className="my-5 py-16 px-12 w-full relative">
+                        <Link className="" to={`/explore/${popularParkData[1].parkCode}`}>
+                            <div className="group h-full">
+                                <img className="popular-home-card h-full" src={popularParkData[1].images[4].url}/>
+                                <div className="popular-home-card-text">{popularParkData[1].name}</div>
+                            </div>
+                        </Link>   
+                    </div>
+                    <div className="my-5 py-16 px-12 w-full relative">
+                        <Link className="" to={`/explore/${popularParkData[2].parkCode}`}>
+                            <div className="group h-full">
+                                <img className="popular-home-card h-full" src={popularParkData[2].images[0].url}/>
+                                <div className="popular-home-card-text">{popularParkData[2].name}</div>
+                            </div>
+                        </Link>   
+                    </div>
                 </div>
                 ) : <div><h2>Loading...</h2></div>}
 
                 
-            
-
-            <div>
+            {/* <div>
                 <ReactJson src={popularParkData} theme="monokai" collapsed= {true} />
-            </div>
+            </div> */}
 
         </div>
     )

@@ -2,3 +2,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .btn {
+        @apply inline-block px-5 py-3 rounded-lg focus:outline-none focus:ring focus:ring-offset-2
+        uppercase tracking-wider font-semibold text-sm sm:text-base
+    }
+    .btn-primary {
+        @apply bg-green-600 hover:bg-green-500
+        focus:ring-green-500 focus:ring-opacity-50 
+        active:bg-green-700 active:text-yellow-300 text-white;
+    }
+    .btn-secondary {
+        @apply bg-gray-300 hover:bg-gray-200
+        focus:ring-gray-300 focus:ring-opacity-50 
+        active:bg-gray-400 text-gray-800;
+    }
+
+
+
+    .popular-home-card {
+        @apply rounded-lg shadow-md object-cover 
+        border-solid border-4 border-black hover:border-green-600 border-opacity-95
+        hover:shadow-2xl transform group-hover:scale-105 duration-500 active:border-green-900;
+    }
+
+    .popular-home-card-text {
+        @apply absolute top-16 right-16 text-black text-opacity-90 font-semibold text-lg pt-1
+        group-hover:text-green-600 transform group-hover:scale-110 duration-500;
+    }
+}
