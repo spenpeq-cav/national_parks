@@ -16,7 +16,7 @@ function HomeScreen() {
             </div>
             <div className="my-4">
                 <PopularParks />
-            </div>
+            </div>  
         </section>
     )
 }

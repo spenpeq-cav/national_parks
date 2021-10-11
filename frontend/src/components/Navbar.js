@@ -11,7 +11,6 @@ function Navbar() {
                     <Link className="px-4 text-gray-400 uppercase hover:text-gray-200 tracking-wider text-sm" to="/">Home</Link>
                     <Link className="px-4 text-gray-400 uppercase hover:text-gray-200 tracking-wider text-sm" to="/explore">Explore</Link>
                     <Link className="px-4 text-gray-400 uppercase hover:text-gray-200 tracking-wider text-sm" to="/about">About</Link>
-                    <Link className="pl-4 text-gray-400 uppercase hover:text-gray-200 tracking-wider text-sm" to="/contact">Contact</Link>
                 </div>
             </nav>
         </div>

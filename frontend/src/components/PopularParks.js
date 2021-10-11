@@ -3,6 +3,8 @@ import ReactJson from 'react-json-view';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import ClipLoader from "react-spinners/ClipLoader"
+
 function PopularParks() {
 
     const [popularParkData, setPopularParkData] = useState([])
@@ -36,8 +38,6 @@ function PopularParks() {
 
     useEffect(() => {
         getPopularData()
-        console.log(loaded)
-        console.log(url)
     }, [loaded])
 
     return (
@@ -70,12 +70,25 @@ function PopularParks() {
                         </Link>   
                     </div>
                 </div>
-                ) : <div><h2>Loading...</h2></div>}
-
-                
-            {/* <div>
-                <ReactJson src={popularParkData} theme="monokai" collapsed= {true} />
-            </div> */}
+                ) : 
+                    <div className="grid grid-cols-3 gap-4">
+                        <div className="my-5 py-16 px-12 w-full relative">
+                            <div className="text-center p-24">
+                                <ClipLoader color={"white"} size={150} />
+                            </div>
+                        </div>
+                        <div className="my-5 py-16 px-12 w-full relative">
+                            <div className="text-center p-24">
+                                <ClipLoader color={"white"} size={150} />
+                            </div>
+                        </div>
+                        <div className="my-5 py-16 px-12 w-full relative">
+                            <div className="text-center p-24">
+                                <ClipLoader color={"white"} size={150} />
+                            </div>
+                        </div>
+                    </div>
+                    }
 
         </div>
     )

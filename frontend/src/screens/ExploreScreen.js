@@ -1,112 +1,72 @@
 import React, {useState, useEffect} from 'react';
-import ReactPaginate from 'react-paginate';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import '../components/css/ExploreScreen.css';
 
 function ExploreScreen() {
-  const [offset, setOffset] = useState(0)
   const [data, setData] = useState([])
-  const [perPage] = useState(8)
-  const [pageCount, setPageCount] = useState(0)
-
+  const [state, setState] = useState("")
   const [filterNPOnly, setFilterNPOnly] = useState(false)
 
+  const stateCodes = [
+    { code: 'AL', name: "Alabama"},{ code: 'AK', name: "Alaska"},{ code: 'AZ', name: "Arizona"},{ code: 'AR', name: "Arkansas"},
+    { code: 'CA', name: "California"},{ code: 'CO', name: "Colorado"},{ code: 'CT', name: "Connecticut"},{ code: 'DE', name: "Delaware"},
+    { code: 'DC', name: "District Of Columbia"},{ code: 'FL', name: "Florida"},{ code: 'GA', name: "Georgia"},{ code: 'HI', name: "Hawaii"},
+    { code: 'ID', name: "Idaho"},{ code: 'IL', name: "Illinois"},{ code: 'IN', name: "Indiana"},{ code: 'IA', name: "Iowa"},{ code: 'KS', name: "Kansas"},
+    { code: 'KY', name: "Kentucky"},{ code: 'LA', name: "Louisiana"},{ code: 'ME', name: "Maine"},{ code: 'MD', name: "Maryland"},
+    { code: 'MA', name: "Massachusetts"},{ code: 'MI', name: "Michigan"},{ code: 'MS', name: "Minnesota"},{ code: 'MO', name: "Missouri"},
+    { code: 'MT', name: "Montana"},{ code: 'NE', name: "Nebraska"},{ code: 'NV', name: "Nevada"},{ code: 'NH', name: "New Hampshire"},
+    { code: 'NJ', name: "New Jersey"},{ code: 'NM', name: "New Mexico"},{ code: 'NY', name: "New York"},{ code: 'NC', name: "North Carolina"},
+    { code: 'ND', name: "North Dakota"},{ code: 'OH', name: "Ohio"},{ code: 'OK', name: "Oklahoma"},{ code: 'OR', name: "Oregon"},{ code: 'PA', name: "Pennsylvania"},
+    { code: 'RI', name: "Rhode Island"},{ code: 'SC', name: "South Carolina"},{ code: 'SD', name: "South Dakota"},{ code: 'TN', name: "Tennessee"},{ code: 'TX', name: "Texas"},
+    { code: 'UT', name: "Utah"},{ code: 'VT', name: "Vermont"},{ code: 'VA', name: "Virginia"},{ code: 'WA', name: "Washington"},
+    { code: 'WV', name: "West Virginia"},{ code: 'WI', name: "Wisconsin"},{ code: 'WY', name: "Wyoming"},
+  ]
+  
+
   const base_url = 'https://developer.nps.gov/api/v1'
-  var endpoint_url = '/parks?limit=600&api_key=' + process.env.REACT_APP_API_KEY
+  // var endpoint_url = '/parks?limit=600&api_key=' + process.env.REACT_APP_API_KEY
+  // var url = base_url + endpoint_url
+  var endpoint_url = '/parks?stateCode='+ state +'&api_key=' + process.env.REACT_APP_API_KEY
   var url = base_url + endpoint_url
 
   const getData = async() => {
     if(filterNPOnly){
-      endpoint_url = '/parks?parkCode=yell&api_key=' + process.env.REACT_APP_API_KEY
+      endpoint_url = '/parks?stateCode='+ state +'&api_key=' + process.env.REACT_APP_API_KEY
       url = base_url + endpoint_url
     }
     const res = await axios.get(url)
     const data = res.data.data
-    const slice = data.slice(offset, offset+perPage)
-    const postData = slice.map(park => 
-      <div key={park.id}>
-        <h5>{park.fullName}</h5>
-        <Link to={`/explore/${park.parkCode}`}>
-          <img src={park.images[0].url}></img>
-        </Link>
-        {/* <p>{park.description}</p>
-        <Link className="button-explore" to={`/explore/${park.parkCode}`}>More Info</Link> */}
-      </div>)
-    setData(postData)
-    setPageCount(Math.ceil(data.length / perPage))
+    setData(data)
+    console.log(data)
   }
-
-  const handlePageClick = (e) => {
-    const selectedPage = e.selected
-    if(selectedPage === 0){
-      setOffset(0)
-    }
-    else{
-      setOffset(selectedPage * perPage)
-    } 
-  }
-
-  useEffect(() => {
-    getData()
-  }, [offset, filterNPOnly])
 
   
   return (
-    <div>
-      <div className='main-explore'>
-        <h2>Explore All National Park Services</h2>
-        <div className='button-container'>
-          <div class="vertical-center">
-            <input type="button" onClick={() => setFilterNPOnly(false)} value="All"></input>
-            <input type="button" onClick={() => setFilterNPOnly(true)} value="National Parks"></input>
-            <p>Filter : {String(filterNPOnly)}</p>
-          </div>
-        </div>
-        <div className='container-explore'>
-          <div className='card-explore'>
-            {data[0]}
-          </div>
-          <div className='card-explore'>
-            {data[1]}
-          </div>
-          <div className='card-explore'>
-            {data[2]}
-          </div>
-          <div className='card-explore'>
-            {data[3]}
-          </div>
-        </div>
-
-        <div className='container-explore'>
-          <div className='card-explore'>
-            {data[4]}
-          </div>
-          <div className='card-explore'>
-            {data[5]}
-          </div>
-          <div className='card-explore'>
-            {data[6]}
-          </div>
-          <div className='card-explore'>
-            {data[7]}
-          </div>
-        </div>
-        <ReactPaginate 
-          previousLabel={"prev"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"} />
+    <section className="bg-explore-image bg-cover p-5">
+      <div className="py-28 max-w-xl mx-auto text-center">
+          <h1 className="mt-6 text-6xl font-bold text-gray-900">Explore Parks</h1>
       </div>
- 
-    </div>
+      
+      <div className="bg-white shadow p-4 flex mx-64 mb-20">
+        <select className="border border-6 border-solid border-black" onChange={(e) => {
+          const selectedState = e.target.value
+          setState(selectedState)
+        }}>
+          <option value="">  Select State</option>
+          { stateCodes.map((state) => (
+            <option value={state.code}>{state.name}</option>
+          ))}
+        </select>
+        <span className="w-auto flex justify-end items-center text-gray-500 p-2">
+          <i className="fas fa-search"></i>
+        </span>
+        <input className="w-full rounded p-2" type="text" placeholder="Search..." />
+        <button className="bg-green-500 hover:bg-green-400 rounded text-black p-2 pl-4 pr-4" onClick={() => getData()}>
+          <p className="font-semibold text-xs"><i className="fas fa-search"></i>Search</p>
+        </button>
+      </div>
+    </section>
   );
 }
 
