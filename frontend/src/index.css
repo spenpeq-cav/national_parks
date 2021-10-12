@@ -28,7 +28,19 @@
     }
 
     .popular-home-card-text {
-        @apply absolute top-16 right-16 text-black text-opacity-90 font-semibold text-lg pt-1
+        @apply absolute text-black text-opacity-90 font-semibold text-lg pt-1
+        group-hover:text-green-600 transform group-hover:scale-110 duration-500;
+    }
+
+
+    .popular-explore-card {
+        @apply rounded-lg shadow-md object-cover 
+        border-solid border-2 border-black hover:border-green-600 border-opacity-95
+        hover:shadow-2xl transform group-hover:scale-105 duration-500 active:border-green-900;
+    }
+
+    .popular-explore-card-text {
+        @apply absolute text-black text-opacity-100 font-bold text-base pt-1
         group-hover:text-green-600 transform group-hover:scale-110 duration-500;
     }
 }

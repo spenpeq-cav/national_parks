@@ -49,7 +49,7 @@ function PopularParks() {
                         <Link className="" to={`/explore/${popularParkData[0].parkCode}`}>
                             <div className="group">
                                 <img className="popular-home-card" src={popularParkData[0].images[0].url}/>
-                                <div className="popular-home-card-text">{popularParkData[0].name}</div>
+                                <div className="popular-home-card-text top-16 right-16">{popularParkData[0].name}</div>
                             </div>
                         </Link>   
                     </div>
@@ -57,7 +57,7 @@ function PopularParks() {
                         <Link className="" to={`/explore/${popularParkData[1].parkCode}`}>
                             <div className="group h-full">
                                 <img className="popular-home-card h-full" src={popularParkData[1].images[4].url}/>
-                                <div className="popular-home-card-text">{popularParkData[1].name}</div>
+                                <div className="popular-home-card-text top-16 right-16">{popularParkData[1].name}</div>
                             </div>
                         </Link>   
                     </div>
@@ -65,7 +65,7 @@ function PopularParks() {
                         <Link className="" to={`/explore/${popularParkData[2].parkCode}`}>
                             <div className="group h-full">
                                 <img className="popular-home-card h-full" src={popularParkData[2].images[0].url}/>
-                                <div className="popular-home-card-text">{popularParkData[2].name}</div>
+                                <div className="popular-home-card-text top-16 right-16">{popularParkData[2].name}</div>
                             </div>
                         </Link>   
                     </div>

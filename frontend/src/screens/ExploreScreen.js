@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-import '../components/css/ExploreScreen.css';
 
 function ExploreScreen() {
   const [data, setData] = useState([])
   const [state, setState] = useState("")
+  const [searchQuery, setSearchQuery] = useState("")
   const [filterNPOnly, setFilterNPOnly] = useState(false)
 
   const stateCodes = [
@@ -22,36 +22,37 @@ function ExploreScreen() {
     { code: 'UT', name: "Utah"},{ code: 'VT', name: "Vermont"},{ code: 'VA', name: "Virginia"},{ code: 'WA', name: "Washington"},
     { code: 'WV', name: "West Virginia"},{ code: 'WI', name: "Wisconsin"},{ code: 'WY', name: "Wyoming"},
   ]
-  
-
-  const base_url = 'https://developer.nps.gov/api/v1'
-  // var endpoint_url = '/parks?limit=600&api_key=' + process.env.REACT_APP_API_KEY
-  // var url = base_url + endpoint_url
-  var endpoint_url = '/parks?stateCode='+ state +'&api_key=' + process.env.REACT_APP_API_KEY
-  var url = base_url + endpoint_url
 
   const getData = async() => {
+    const base_url = 'https://developer.nps.gov/api/v1'
+    // var endpoint_url = ''
+    if(searchQuery !== ""){
+      var endpoint_url = '/parks?stateCode='+ state + '&q='+ searchQuery +'&api_key=' + process.env.REACT_APP_API_KEY
+    }else {
+      var endpoint_url = '/parks?stateCode='+ state +'&api_key=' + process.env.REACT_APP_API_KEY
+    }
+    var url = base_url + endpoint_url
     if(filterNPOnly){
-      endpoint_url = '/parks?stateCode='+ state +'&api_key=' + process.env.REACT_APP_API_KEY
+      endpoint_url = '/parks?stateCode='+ state + '&api_key=' + process.env.REACT_APP_API_KEY
       url = base_url + endpoint_url
     }
     const res = await axios.get(url)
     const data = res.data.data
     setData(data)
     console.log(data)
+    console.log(searchQuery)
   }
 
   
   return (
-    <section className="bg-explore-image bg-cover p-5">
+    <section className="bg-explore-image bg-cover bg-center bg-fixed p-5 min-h-screen">
       <div className="py-28 max-w-xl mx-auto text-center">
           <h1 className="mt-6 text-6xl font-bold text-gray-900">Explore Parks</h1>
       </div>
       
       <div className="bg-white shadow p-4 flex mx-64 mb-20">
         <select className="border border-6 border-solid border-black" onChange={(e) => {
-          const selectedState = e.target.value
-          setState(selectedState)
+          setState(e.target.value)
         }}>
           <option value="">  Select State</option>
           { stateCodes.map((state) => (
@@ -61,10 +62,25 @@ function ExploreScreen() {
         <span className="w-auto flex justify-end items-center text-gray-500 p-2">
           <i className="fas fa-search"></i>
         </span>
-        <input className="w-full rounded p-2" type="text" placeholder="Search..." />
+        <input className="w-full rounded p-2" type="text" placeholder="Search..." onChange={(e) => {
+          setSearchQuery(e.target.value)
+        }}/>
         <button className="bg-green-500 hover:bg-green-400 rounded text-black p-2 pl-4 pr-4" onClick={() => getData()}>
           <p className="font-semibold text-xs"><i className="fas fa-search"></i>Search</p>
         </button>
+      </div>
+
+      <div className="grid grid-cols-3 px-60">
+        { data.map((park) => (
+          <div className="p-6 w-auto relative h-auto">
+            <Link className="" to={`/explore/${park.parkCode}`}>
+              <div className="group">
+                <img className="popular-explore-card object-cover" src={park.images[0].url}/>
+                <div className="popular-explore-card-text top-6 right-8">{park.name}</div>
+              </div>
+            </Link>   
+          </div>
+        ))}
       </div>
     </section>
   );
