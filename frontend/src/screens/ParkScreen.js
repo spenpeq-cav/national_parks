@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import '../components/css/ParkScreen.css';
+
+import { Link } from 'react-router-dom'
 
 function ParkScreen({ match }) {
     const [data, setData] = useState([])
@@ -28,49 +27,79 @@ function ParkScreen({ match }) {
     return (
         <div>
             { loaded ? (
-                    <div className="row">
-                        <div className="column">
-                            <Carousel width={650} showArrows={true} selectedItem={0} swipable={true} swipeScrollTolerance={5} swipeScrollTolerance={5} autoPlay={true} infiniteLoop={true} stopOnHover={true} interval={5000} transitionTime={500} dynamicHeight={false}>
-                                {data.images.map((img) => 
-                                    <div key={data.topics.index}>
-                                        <img src={img.url} />
-                                        <p className="legend">{img.caption}</p>
-                                    </div>)}
-                            </Carousel>
+                    <section className="bg-black items-center">
+                        <div className="w-full text-center bg-black relative">
+                            <img src={data.images[0].url} className="z-1 w-full max-h-96 object-cover opacity-80"/>
+                            <h1 className="w-full text-white font-bold tracking-wide text-6xl z-10 top-36 absolute">{data.fullName}</h1>
+                            <h2 className="w-full text-white text-xl z-10 top-56 absolute">{data.designation}</h2>
                         </div>
-                        <div className="column info-column">
-                            <div className="info-box">
-                                <h2>{data.fullName}</h2>
-                                <p>{data.description}</p>
-                                <p>Located in the state(s): {data.states}</p>
-                                <p>{data.directionsInfo}</p>
+                        <div className="w-full text-center bg-black grid grid-cols-4 gap-4 px-56 py-6">
+                            <div>
+                                <h1 className="text-white text-lg uppercase">Location</h1>
+                                <p className="text-white">Text here</p>
                             </div>
-                            <div className="info-box">
-                                <h3>Activities</h3>
-                                <ui>
-                                    {data.activities.map((act) => 
-                                    <li key={data.activities.index}>
-                                        {act.name}
-                                    </li>)}
-                                </ui>
+                            <div>
+                                <h1 className="text-white text-lg uppercase">Email</h1>
+                                <p className="text-white">{data.contacts.emailAddresses[0].emailAddress}</p>
                             </div>
-                            <div className="info-box">
-                                <h3>Topics</h3>
-                                <ui>
-                                    {data.topics.map((act) => 
-                                    <li key={data.topics.index}>
-                                        {act.name}
-                                    </li>)}
-                                </ui>
+                            <div>
+                                <h1 className="text-white text-lg uppercase">Phone</h1>
+                                <p className="text-white">{data.contacts.phoneNumbers[0].phoneNumber}</p>
                             </div>
-                            <div className="info-box">
-                                <h3><i class="fas fa-phone-square-alt"></i> Contact</h3>
-                                <p>{data.contacts.emailAddresses[0].description}</p>
-                                <p><b>Email:</b> {data.contacts.emailAddresses[0].emailAddress}</p>
-                                <p><b>Phone Number:</b> {data.contacts.phoneNumbers[0].phoneNumber}</p>
+                            <div>
+                                <a className="btn btn-secondary transform hover:scale-105 duration-350" href={data.url} target="_blank" rel="noopener noreferrer">Learn More</a>
                             </div>
                         </div>
-                    </div>
+
+                        <div className="grid grid-cols-2 py-16 px-32 mx-16">
+                            <h2 className="text-white text-3xl text-center">Overview</h2>
+                            <p className="text-white text-md pr-12">{data.description}</p>
+                        </div>
+                        <div className="grid grid-cols-2 pb-16 px-32 mx-16">
+                            <h2 className="text-white text-3xl  text-center">Climate</h2>
+                            <p className="text-white text-md">{data.weatherInfo}</p>
+                        </div>
+
+                        <div className="bg-gray-100 py-16">
+                            <div className="grid grid-cols-2 py-16 px-32 mx-16 gap-20">
+                                <img src={data.images[1].url}/>
+                                <div>
+                                    <h2 className="text-black text-3xl">Activites</h2>
+                                    <h3 className="text-black uppercase py-2">Things to Do</h3>
+                                    <p className="text-black text-md py-4 text-sm">
+                                        <ui className="grid grid-cols-2 list-none">
+                                            {data.activities.map((act) => 
+                                            <li key={data.activities.index}>
+                                                {act.name}
+                                            </li>)}
+                                        </ui>
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 py-16 px-32 mx-16 gap-20">
+                                <div>
+                                    <h2 className="text-black text-3xl">Topics</h2>
+                                    <h3 className="text-black uppercase py-2">Things to Learn</h3>
+                                    <p className="text-black text-sm py-4">
+                                        <ui className="grid grid-cols-2 list-none">
+                                            {data.topics.map((act) => 
+                                            <li key={data.topics.index}>
+                                                {act.name}
+                                            </li>)}
+                                        </ui>
+                                    </p>
+                                </div>
+                                <img src={data.images[2].url}/>
+                            </div>
+                        </div>
+
+                        <div className="bg-black py-12 px-48">
+                            <h2 className="text-gray-100 text-2xl">Directions</h2>
+                            <p className="text-gray-400">{data.directionsInfo}</p>
+                            <a href={data.directionsUrl} className="text-gray-100 underline">More information...</a>
+                        </div>
+
+                    </section>
                     
                 
             ) : <div><h1>Loading ...</h1></div>}
