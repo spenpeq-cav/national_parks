@@ -2,7 +2,7 @@ import React from 'react'
 
 function AboutScreen() {
     return (
-        <section className="grid grid-cols-2 gap-4 py-16 bg-black p-10">
+        <section className="grid grid-cols-2 gap-4 py-24 bg-black p-10 px-56">
             <div className="px-24">
                 <h1 className="mt-6 text-6xl font-bold text-gray-300 pb-2">About</h1>
                 <p className="mt-6 text-gray-300 text-sm">

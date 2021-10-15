@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-
+import GoogleMaps from '../components/GoogleMaps';
 import { Link } from 'react-router-dom'
 
 function ParkScreen({ match }) {
@@ -98,6 +98,8 @@ function ParkScreen({ match }) {
                             <p className="text-gray-400">{data.directionsInfo}</p>
                             <a href={data.directionsUrl} className="text-gray-100 underline">More information...</a>
                         </div>
+
+                       <GoogleMaps lat={data.latitude} lng={data.longitude} />
 
                     </section>
                     
