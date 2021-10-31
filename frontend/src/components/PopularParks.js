@@ -17,7 +17,7 @@ function PopularParks() {
     const url = base_url + endpoint_url
 
     const url1 = 'https://developer.nps.gov/api/v1/parks?parkCode='+ popularParkCodes[2] +'&api_key=' + process.env.REACT_APP_API_KEY
-    const url2 = 'https://developer.nps.gov/api/v1/parks?parkCode='+ popularParkCodes[4] +'&api_key=' + process.env.REACT_APP_API_KEY
+    const url2 = 'https://developer.nps.gov/api/v1/parks?parkCode='+ popularParkCodes[1] +'&api_key=' + process.env.REACT_APP_API_KEY
     const url3 = 'https://developer.nps.gov/api/v1/parks?parkCode='+ popularParkCodes[5] +'&api_key=' + process.env.REACT_APP_API_KEY
 
     const getPopularData = async() => {
@@ -44,45 +44,45 @@ function PopularParks() {
         <div>
             
             { loaded ? (
-                <div className="grid grid-cols-3 gap-4">
-                   <div className="my-5 py-16 px-12 w-full relative">
+                <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-4">
+                   <div className="md:px-16 lg:px-2 w-full relative p-2">
                         <Link className="" to={`/explore/${popularParkData[0].parkCode}`}>
                             <div className="group">
                                 <img className="popular-home-card" src={popularParkData[0].images[0].url}/>
-                                <div className="popular-home-card-text top-16 right-16">{popularParkData[0].name}</div>
+                                <div className="popular-home-card-text top-2 right-6 md:right-20 lg:right-6">{popularParkData[0].name}</div>
                             </div>
                         </Link>   
                     </div>
-                    <div className="my-5 py-16 px-12 w-full relative">
+                    <div className="md:px-16 lg:px-2 w-full relative p-2">
                         <Link className="" to={`/explore/${popularParkData[1].parkCode}`}>
                             <div className="group h-full">
-                                <img className="popular-home-card h-full" src={popularParkData[1].images[4].url}/>
-                                <div className="popular-home-card-text top-16 right-16">{popularParkData[1].name}</div>
+                                <img className="popular-home-card h-full" src={popularParkData[1].images[1].url}/>
+                                <div className="popular-home-card-text top-2 right-6 md:right-20 lg:right-6">{popularParkData[1].name}</div>
                             </div>
                         </Link>   
                     </div>
-                    <div className="my-5 py-16 px-12 w-full relative">
+                    <div className="md:px-16 lg:px-2 w-full relative p-2">
                         <Link className="" to={`/explore/${popularParkData[2].parkCode}`}>
                             <div className="group h-full">
                                 <img className="popular-home-card h-full" src={popularParkData[2].images[0].url}/>
-                                <div className="popular-home-card-text top-16 right-16">{popularParkData[2].name}</div>
+                                <div className="popular-home-card-text top-2 right-6 md:right-20 lg:right-6">{popularParkData[2].name}</div>
                             </div>
                         </Link>   
                     </div>
                 </div>
                 ) : 
                     <div className="grid grid-cols-3 gap-4">
-                        <div className="my-5 py-16 px-12 w-full relative">
+                        <div className="2xl:my-5 2xl:py-16 2xl:px-12 w-full relative">
                             <div className="text-center p-24">
                                 <ClipLoader color={"white"} size={150} />
                             </div>
                         </div>
-                        <div className="my-5 py-16 px-12 w-full relative">
+                        <div className="2xl:my-5 2xl:py-16 2xl:px-12 w-full relative">
                             <div className="text-center p-24">
                                 <ClipLoader color={"white"} size={150} />
                             </div>
                         </div>
-                        <div className="my-5 py-16 px-12 w-full relative">
+                        <div className="2xl:my-5 2xl:py-16 2xl:px-12 w-full relative">
                             <div className="text-center p-24">
                                 <ClipLoader color={"white"} size={150} />
                             </div>

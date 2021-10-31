@@ -5,8 +5,9 @@
 
 @layer components{
     .btn {
-        @apply inline-block px-5 py-3 rounded-lg focus:outline-none focus:ring focus:ring-offset-2
-        uppercase tracking-wider font-semibold text-sm sm:text-base
+        @apply inline-block rounded-lg focus:outline-none focus:ring focus:ring-offset-2
+        uppercase tracking-wider font-semibold text-base
+        transform transition hover:scale-105 hover:-translate-y-1 duration-500 ease-in-out
     }
     .btn-primary {
         @apply bg-green-600 hover:bg-green-500
