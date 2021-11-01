@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
+import ClipLoader from "react-spinners/ClipLoader"
 
 function ExploreScreen() {
   const [data, setData] = useState([])
   const [state, setState] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
   const [filterNPOnly, setFilterNPOnly] = useState(false)
+  const [loaded, setLoaded] = useState(true)
 
   const stateCodes = [
     { code: 'AL', name: "Alabama"},{ code: 'AK', name: "Alaska"},{ code: 'AZ', name: "Arizona"},{ code: 'AR', name: "Arkansas"},
@@ -24,6 +26,7 @@ function ExploreScreen() {
   ]
 
   const getData = async() => {
+    setLoaded(false)
     const base_url = 'https://developer.nps.gov/api/v1'
     // var endpoint_url = ''
     if(searchQuery !== ""){
@@ -39,49 +42,58 @@ function ExploreScreen() {
     const res = await axios.get(url)
     const data = res.data.data
     setData(data)
-    console.log(data)
-    console.log(searchQuery)
+    setLoaded(true)
   }
 
-  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <section className="bg-explore-image bg-cover bg-center bg-fixed p-5 min-h-screen">
-      <div className="py-28 max-w-xl mx-auto text-center">
-          <h1 className="mt-6 text-6xl font-bold text-gray-900">Explore Parks</h1>
+      <div className="py-16 max-w-xl mx-auto text-center">
+          <h1 className="mt-4 text-6xl font-bold text-gray-900">Explore Parks</h1>
       </div>
       
-      <div className="bg-white shadow p-4 flex mx-64 mb-20">
-        <select className="border border-6 border-solid border-black" onChange={(e) => {
+      <div className="bg-white shadow p-4 flex flex-col lg:flex-row mb-15 rounded mx-2 md:mx-4 lg:mx-12 xl:mx-16 2xl:mx-72">
+        <select className="border border-6 border-solid border-black rounded py-4 px-2 my-2 lg:py-4 lg:mr-8" onChange={(e) => {
           setState(e.target.value)
         }}>
-          <option value="">  Select State</option>
+          <option value="" className="">  Select State</option>
           { stateCodes.map((state) => (
-            <option value={state.code}>{state.name}</option>
+            <option value={state.code} className="text-md w-auto">{state.name}</option>
           ))}
         </select>
-        <span className="w-auto flex justify-end items-center text-gray-500 p-2">
-          <i className="fas fa-search"></i>
-        </span>
-        <input className="w-full rounded p-2" type="text" placeholder="Search..." onChange={(e) => {
+        
+        <input className="w-full rounded border border-3 border-solid border-black py-4 px-2 my-2 lg:py-0" type="text" placeholder="Search term..." onChange={(e) => {
           setSearchQuery(e.target.value)
         }}/>
-        <button className="bg-green-500 hover:bg-green-400 rounded text-black p-2 pl-4 pr-4" onClick={() => getData()}>
-          <p className="font-semibold text-xs"><i className="fas fa-search"></i>Search</p>
+        <button className="bg-green-500 hover:bg-green-400 rounded text-black py-4 my-2 lg:py-0 lg:px-4" onClick={() => getData()}>
+          <p className="font-semibold text-lg lg:flex lg:flex-row"><i className="fas fa-search lg:p-1"></i> Search</p>
         </button>
       </div>
 
-      <div className="grid grid-cols-3 px-60">
-        { data.map((park) => (
-          <div className="p-6 w-auto relative h-auto">
-            <Link className="" to={`/explore/${park.parkCode}`}>
-              <div className="group">
-                <img className="popular-explore-card object-cover" src={park.images[0].url}/>
-                <div className="popular-explore-card-text top-6 right-8">{park.name}</div>
-              </div>
-            </Link>   
-          </div>
-        ))}
-      </div>
+      { loaded ? 
+        <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64">
+          { data.map((park) => (
+            <div className="p-4 w-auto relative h-48 my-6 md:h-56 xl:h-64 2xl:h-80">
+              <Link className="" to={`/explore/${park.parkCode}`}>
+                <div className="group w-full h-48 md:h-56 xl:h-64 2xl:h-80">
+                  <img className="popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90" src={park.images[0].url}/>
+                  <div className="popular-explore-card-text top-6 right-8">{park.name}</div>
+                </div>
+              </Link>   
+            </div>
+          ))}
+        </div> : 
+        <div className="w-full relative py-16">
+            <div className="text-center">
+              <ClipLoader color={"white"} size={150} />
+            </div>
+        </div>
+      }
+
+      
     </section>
   );
 }

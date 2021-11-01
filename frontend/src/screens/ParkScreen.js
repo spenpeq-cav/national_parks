@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import GoogleMaps from '../components/GoogleMaps';
 import { Link } from 'react-router-dom'
+import ClipLoader from "react-spinners/ClipLoader"
 
 function ParkScreen({ match }) {
     const [data, setData] = useState([])
@@ -20,71 +21,75 @@ function ParkScreen({ match }) {
     }
 
     useEffect(() => {
+        window.scrollTo(0, 0)
         getData()
     }, [])
 
-    console.log(data)
     return (
         <div>
             { loaded ? (
                     <section className="bg-black items-center">
+
                         <div className="w-full text-center bg-black relative">
-                            <img src={data.images[0].url} className="z-1 w-full max-h-96 object-cover opacity-80"/>
-                            <h1 className="w-full text-white font-bold tracking-wide text-6xl z-10 top-36 absolute">{data.fullName}</h1>
-                            <h2 className="w-full text-white text-xl z-10 top-56 absolute">{data.designation}</h2>
-                        </div>
-                        <div className="w-full text-center bg-black grid grid-cols-4 gap-4 px-56 py-6">
-                            <div>
-                                <h1 className="text-white text-lg uppercase">Location</h1>
-                                <p className="text-white">Text here</p>
+                            <img src={data.images[0].url} className="z-1 w-full max-h-screen object-cover opacity-80"/>
+                            <div className="absolute m-auto z-10 w-full text-white text-center top-16 sm:top-24 lg:top-44 xl:top-64 2xl:top-80">
+                                <h1 className="font-bold tracking-wide text-3xl sm:text-5xl md:text-6xl xl:text-7xl px-36 md:px-40">{data.fullName}</h1>
+                                <h2 className="text-md sm:text-lg md:text-xl xl:text-2xl pt-3">{data.designation}</h2>
                             </div>
-                            <div>
-                                <h1 className="text-white text-lg uppercase">Email</h1>
+                        </div>
+
+                        <div className="w-full lg:text-center bg-black px-16 py-6 md:grid md:grid-cols-2 lg:grid-cols-4 lg:gap-4 2xl:px-56 lg:py-6">
+                            <div className="py-2">
+                                <h1 className="text-white text-lg uppercase font-bold">Location</h1>
+                                <p className="text-white">{data.addresses[0].city}, {data.addresses[0].stateCode}</p>
+                            </div>
+                            <div className="py-2">
+                                <h1 className="text-white text-lg uppercase font-bold">Email</h1>
                                 <p className="text-white">{data.contacts.emailAddresses[0].emailAddress}</p>
                             </div>
-                            <div>
-                                <h1 className="text-white text-lg uppercase">Phone</h1>
+                            <div className="py-2">
+                                <h1 className="text-white text-lg uppercase font-bold">Phone</h1>
                                 <p className="text-white">{data.contacts.phoneNumbers[0].phoneNumber}</p>
                             </div>
-                            <div>
-                                <a className="btn btn-secondary transform hover:scale-105 duration-350" href={data.url} target="_blank" rel="noopener noreferrer">Learn More</a>
+                            <div className="py-2">
+                                <a className="btn btn-secondary transform hover:scale-105 duration-350 py-3 w-full text-center" href={data.url} target="_blank" rel="noopener noreferrer">Learn More</a>
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 py-16 px-32 mx-16">
-                            <h2 className="text-white text-3xl text-center">Overview</h2>
-                            <p className="text-white text-md pr-12">{data.description}</p>
+                        <div className="lg:grid lg:grid-cols-3 px-6 py-12 lg:pt-24 2xl:py-16 2xl:px-32 2xl:mx-16">
+                            <h2 className="text-white text-4xl lg:text-center pb-4 lg:col-span-1">Overview</h2>
+                            <p className="text-white text-lg 2xl:pr-12 lg:col-span-2">{data.description}</p>
                         </div>
-                        <div className="grid grid-cols-2 pb-16 px-32 mx-16">
-                            <h2 className="text-white text-3xl  text-center">Climate</h2>
-                            <p className="text-white text-md">{data.weatherInfo}</p>
+                        <div className="lg:grid lg:grid-cols-3 px-6 py-12 lg:pb-24 2xl:py-16 2xl:px-32 2xl:mx-16">
+                            <h2 className="text-white text-4xl lg:text-center pb-4 lg:col-span-1">Climate</h2>
+                            <p className="text-white text-lg lg:col-span-2">{data.weatherInfo}</p>
                         </div>
 
-                        <div className="bg-gray-100 py-16">
-                            <div className="grid grid-cols-2 py-16 px-32 mx-16 gap-20">
+                        <div className="bg-gray-200 xl:py-16">
+                            <div className="lg:grid lg:grid-cols-2 xl:py-4 xl:px-24 xl:gap-10">
                                 <img src={data.images[1].url}/>
-                                <div>
-                                    <h2 className="text-black text-3xl">Activites</h2>
-                                    <h3 className="text-black uppercase py-2">Things to Do</h3>
-                                    <p className="text-black text-md py-4 text-sm">
+                                <div className="py-2 px-4 pt-12 md:px-12">
+                                    <h2 className="text-black text-4xl font-semibold">Activites</h2>
+                                    <h3 className="text-black uppercase py-2 font-semibold">Things to Do</h3>
+                                    <p className="text-black text-md py-4 text-md">
                                         <ui className="grid grid-cols-2 list-none">
                                             {data.activities.map((act) => 
                                             <li key={data.activities.index}>
-                                                {act.name}
+                                                - {act.name}
                                             </li>)}
                                         </ui>
                                     </p>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 py-16 px-32 mx-16 gap-20">
-                                <div>
-                                    <h2 className="text-black text-3xl">Topics</h2>
-                                    <h3 className="text-black uppercase py-2">Things to Learn</h3>
-                                    <p className="text-black text-sm py-4">
+                            <div className="lg:grid lg:grid-cols-2 xl:py-4 xl:px-24 xl:gap-10 mt-16">
+                                <div className="py-2 px-4 md:px-12">
+                                    <h2 className="text-black text-4xl font-semibold">Topics</h2>
+                                    <h3 className="text-black uppercase py-2 font-semibold">Things to Learn</h3>
+                                    <p className="text-black text-md py-4">
                                         <ui className="grid grid-cols-2 list-none">
                                             {data.topics.map((act) => 
                                             <li key={data.topics.index}>
-                                                {act.name}
+                                                - {act.name}
                                             </li>)}
                                         </ui>
                                     </p>
@@ -93,10 +98,10 @@ function ParkScreen({ match }) {
                             </div>
                         </div>
 
-                        <div className="bg-black py-12 px-48">
-                            <h2 className="text-gray-100 text-2xl">Directions</h2>
-                            <p className="text-gray-400">{data.directionsInfo}</p>
-                            <a href={data.directionsUrl} className="text-gray-100 underline">More information...</a>
+                        <div className="bg-black p-8 md:p-12 lg:py-12 lg:px-48 xl:px-64">
+                            <h2 className="text-gray-100 text-4xl py-2">Directions</h2>
+                            <p className="text-gray-400 text-lg py-2">{data.directionsInfo}</p>
+                            <a href={data.directionsUrl} className="text-gray-100 underline py-2">More information...</a>
                         </div>
 
                        <GoogleMaps lat={data.latitude} lng={data.longitude} />
@@ -104,7 +109,11 @@ function ParkScreen({ match }) {
                     </section>
                     
                 
-            ) : <div><h1>Loading ...</h1></div>}
+            ) : <div>
+                    <div className="text-center bg-black h-screen pt-48">
+                        <ClipLoader color={"white"} size={150}/>
+                    </div>
+                </div>}
             
             
         </div>
