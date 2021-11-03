@@ -30,19 +30,32 @@ function ExploreScreen() {
     const base_url = 'https://developer.nps.gov/api/v1'
     // var endpoint_url = ''
     if(searchQuery !== ""){
-      var endpoint_url = '/parks?stateCode='+ state + '&q='+ searchQuery +'&api_key=' + process.env.REACT_APP_API_KEY
+      var endpoint_url = '/parks?stateCode='+ state + '&limit=999' + '&q='+ searchQuery +'&api_key=' + process.env.REACT_APP_API_KEY
     }else {
-      var endpoint_url = '/parks?stateCode='+ state +'&api_key=' + process.env.REACT_APP_API_KEY
+      var endpoint_url = '/parks?stateCode='+ state + '&limit=999' +'&api_key=' + process.env.REACT_APP_API_KEY
     }
     var url = base_url + endpoint_url
-    if(filterNPOnly){
-      endpoint_url = '/parks?stateCode='+ state + '&api_key=' + process.env.REACT_APP_API_KEY
-      url = base_url + endpoint_url
-    }
+    
     const res = await axios.get(url)
-    const data = res.data.data
+    var data = res.data.data
+
+    if(filterNPOnly){
+      var filteredData = []
+      for(var i = 0; i < data.length; i++){
+        if(data[i].designation === "National Park"){
+          filteredData.push(data[i])
+        }
+      }
+      data = filteredData
+    }
+
     setData(data)
     setLoaded(true)
+    console.log(data)
+  }
+  
+  const handleFilterNPOnly = () => {
+    setFilterNPOnly(!filterNPOnly)
   }
 
   useEffect(() => {
@@ -55,7 +68,7 @@ function ExploreScreen() {
           <h1 className="mt-4 text-6xl font-bold text-gray-900">Explore Parks</h1>
       </div>
       
-      <div className="bg-white shadow p-4 flex flex-col lg:flex-row mb-15 rounded mx-2 md:mx-4 lg:mx-12 xl:mx-16 2xl:mx-72">
+      <div className="bg-gray-200 shadow p-4 flex flex-col lg:flex-row mb-15 rounded mx-2 md:mx-4 lg:mx-12 xl:mx-16 2xl:mx-72">
         <select className="border border-6 border-solid border-black rounded py-4 px-2 my-2 lg:py-4 lg:mr-8" onChange={(e) => {
           setState(e.target.value)
         }}>
@@ -71,6 +84,12 @@ function ExploreScreen() {
         <button className="bg-green-500 hover:bg-green-400 rounded text-black py-4 my-2 lg:py-0 lg:px-4" onClick={() => getData()}>
           <p className="font-semibold text-lg lg:flex lg:flex-row"><i className="fas fa-search lg:p-1"></i> Search</p>
         </button>
+        
+        <label className="inline-flex items-center justify-center py-2 lg:pl-4 lg:w-48">
+          <input type="checkbox" checked={filterNPOnly} onChange={handleFilterNPOnly} className="appearance-none border border-gray-400 rounded-lg h-6 w-6 lg:w-6 lg:h-4 checked:bg-green-500 checked:border-transparent"/>
+          <span className="pl-2 text-gray-900 font-medium lg:text-sm lg:font-normal">National Parks Only</span>
+        </label>
+        
       </div>
 
       { loaded ? 

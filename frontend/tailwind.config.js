@@ -11,12 +11,12 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ['active'],
+      backgroundColor: ['active', 'checked'],
       textColor: ['active'],
       animation: ['motion-safe'],
       transform: ['hover', 'active', 'focus', 'motion-safe'],
       scale: ['group-hover'],
-      borderColor: ['active'],
+      borderColor: ['active', 'checked'],
     },
   },
   plugins: [],

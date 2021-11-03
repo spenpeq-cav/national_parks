@@ -10,10 +10,10 @@ function Footer() {
                     <p className="text-green-600 tracking-widest text-center text-sm t"> Copyright 2021</p>
                 </div>
                 <div className="flex-auto 2xl:mr-24 text-left py-6 max-w-md">
-                    <p className="text-gray-50">Made possible by the</p>
-                    <a href="https://www.nps.gov/subjects/developer/api-documentation.htm" className="underline text-gray-50">National Park Service API</a>
+                    <p className="text-gray-300">Made possible by the</p>
+                    <a href="https://www.nps.gov/subjects/developer/api-documentation.htm" className="underline text-gray-300">National Park Service API</a>
                 </div>
-                <p className="flex-auto text-gray-50">For more information about national parks, upcoming park events, anniversaries, and awards, view the <a href="https://www.nps.gov/index.htm" className="underline">National Park Service website</a>.</p>
+                <p className="flex-auto text-gray-300">For more information about national parks, upcoming park events, anniversaries, and awards, view the <a href="https://www.nps.gov/index.htm" className="underline">National Park Service website</a>.</p>
             </div>
             
         </div>
