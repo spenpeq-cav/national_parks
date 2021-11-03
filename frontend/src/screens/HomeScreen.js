@@ -11,7 +11,7 @@ function HomeScreen() {
                 <p className="mt-6 text-gray-900">Explore information on all national parks and services. View activites, ticket fees, parking, and more! Log in to save your favorite parks.</p>
                 <div className="mt-6 space-x-3 ">
                     <Link className="btn btn-primary px-6 py-4 xl:px-8 xl:py-6" to="/explore">Explore Parks</Link>
-                    <Link className="btn btn-secondary px-6 py-4 xl:px-8 xl:py-6" to="/">Log In</Link>
+                    <Link className="btn btn-secondary px-6 py-4 xl:px-8 xl:py-6" to="/login">Log In</Link>
                 </div>
             </div>
             <div className="my-4 py-6">

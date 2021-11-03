@@ -9,6 +9,8 @@ import ExploreScreen from './screens/ExploreScreen';
 import ParkScreen from './screens/ParkScreen';
 import BackendTest from './screens/BackendTest';
 import AboutScreen from './screens/AboutScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
       <Route path='/explore' component={ExploreScreen} exact/>
       <Route path='/explore/:parkcode' component={ParkScreen} />
       <Route path='/server' component={BackendTest} />
+      <Route path='/login' component={LoginScreen} />
+      <Route path='/register' component={RegisterScreen} />
       <Footer />
     </Router> 
   );
