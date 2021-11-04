@@ -1,11 +1,11 @@
 import React from 'react'
+import axios from 'axios';
 
 function BackendTest() {
     const [data, setData] = React.useState(null)
     React.useEffect(() => {
-        fetch("/api")
-          .then((res) => res.json())
-          .then((data) => setData(data.message));
+        axios.get("/api")
+          .then((res) => setData(res.data.message))
       }, []);
 
     return (

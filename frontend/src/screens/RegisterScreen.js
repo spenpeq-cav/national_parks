@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 
 function RegisterScreen() {
     return (
@@ -14,28 +14,28 @@ function RegisterScreen() {
                             </a>
                         </p>
                     </div>
-                    <form className="mt-8 space-y-6" action="#" method="POST">
+                    <form className="mt-8 space-y-6" action="/register" method="POST">
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="pb-2">
                                 <label htmlFor="first-name" className="sr-only">
                                     First name
                                 </label>
-                                <input id="first-name" name="firstname" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-lg" placeholder="First name"
+                                <input id="first-name" name="firstName" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-lg" placeholder="First name"
                                 />
                             </div>
                             <div className="pb-10">
                                 <label htmlFor="last-name" className="sr-only">
                                     Last Name
                                 </label>
-                                <input id="last-name" name="lastname" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-lg" placeholder="Last name"
+                                <input id="last-name" name="lastName" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-lg" placeholder="Last name"
                                 />
                             </div>
                             <div className="pb-2">
                                 <label htmlFor="email-address" className="sr-only">
                                 Email address
                                 </label>
-                                <input id="email-address" name="email" type="email" autoComplete="email" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-lg" placeholder="Email address"
+                                <input id="email-address" name="username" type="email" autoComplete="email" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-lg" placeholder="Email address"
                                 />
                             </div>
                             <div>
@@ -59,9 +59,6 @@ function RegisterScreen() {
                                 type="submit"
                                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                             >
-                                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                                
-                                </span>
                                 Register
                             </button>
                         </div>

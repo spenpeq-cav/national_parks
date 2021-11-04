@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -11,20 +11,23 @@ import BackendTest from './screens/BackendTest';
 import AboutScreen from './screens/AboutScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Route path='/' component={HomeScreen} exact />
-      <Route path='/about' component={AboutScreen} />
-      <Route path='/explore' component={ExploreScreen} exact/>
-      <Route path='/explore/:parkcode' component={ParkScreen} />
-      <Route path='/server' component={BackendTest} />
-      <Route path='/login' component={LoginScreen} />
-      <Route path='/register' component={RegisterScreen} />
-      <Footer />
-    </Router> 
+    <div>
+      <Switch>
+        <Route path='/' component={HomeScreen} exact />
+        <Route path='/about' component={AboutScreen} />
+        <Route path='/explore' component={ExploreScreen} exact/>
+        <Route path='/explore/:parkcode' component={ParkScreen} />
+        <Route path='/server' component={BackendTest} />
+        <Route path='/login' component={LoginScreen} />
+        <Route path='/register' component={RegisterScreen} />
+        <Route path='/profile' component={ProfileScreen} />
+    </Switch> 
+    </div>
+    
   );
 }
 
