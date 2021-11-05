@@ -16,6 +16,11 @@ app.use(express.static(path.join(__dirname, 'frontend/build')));
 
 app.use(session({
     secret: process.env.SECRET,
+    name: "natparks",
+    cookie: {
+        httpOnly: true,
+        maxAge: 600000
+    },
     resave: false,
     saveUninitialized: false
 }))
@@ -42,11 +47,36 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 
-
 app.get("/api", (req, res) => {
-    res.json({ message: "Hello from server use api route!" });
+    if(req.isAuthenticated()){
+        res.json({ message: "Authenticated!" });
+    } else {
+        res.json({ message: "Not Authenticated!" });
+    }
 });
 
+app.get("/user", function(req, res){
+    res.send(req.user)
+})
+
+app.get("/userauth", (req, res) => {
+    if(req.isAuthenticated()){
+        res.json({ auth: true });
+    } else {
+        res.json({ auth: false });
+    }
+});
+
+app.get("/logout", function(req, res){
+    req.session.destroy()
+    res.clearCookie("natparks", {
+        path: "/",
+        httpOnly: true, 
+        secure: true,
+        sameSite: "none",    
+        expires: new Date(1), 
+    })
+})
 
 app.post("/register", function(req, res){
     User.findOne({username: req.body.username}, (err, doc) => {
@@ -64,7 +94,6 @@ app.post("/register", function(req, res){
                 } else {
                     passport.authenticate("local")(req, res, function(){
                         res.redirect("/profile")
-                        console.log("Success")
                     })
                 }
                 
@@ -85,19 +114,10 @@ app.post("/login", function(req, res, next){
                 if(err) {
                     console.log(err)
                 }
-                res.send("Successfully Authenticated")
-                console.log(req.user)
+                res.redirect("/profile")
             })
         }
     })(req, res, next)
-})
-
-app.get("/profile", function(req, res){
-    res.send(req.user)
-})
-
-app.get("/logout", function(req, res){
-    req.logout()
 })
 
 app.get('*', (req, res) => {

@@ -1,9 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-
 import HomeScreen from './screens/HomeScreen';
 import ExploreScreen from './screens/ExploreScreen';
 import ParkScreen from './screens/ParkScreen';
