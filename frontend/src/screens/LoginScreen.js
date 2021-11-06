@@ -1,6 +1,24 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 function LoginScreen() {
+
+    const history = useHistory()
+    const [userAuth, setUserAuth] = useState(false)
+
+    const checkUserAuth = async() => {
+        await axios.get("/userauth", {withCredentials: true})
+            .then((res) => (setUserAuth(res.data.auth)))
+    }
+    
+    useEffect(() => {
+        checkUserAuth()
+        if(userAuth){
+            history.goBack()
+        }
+    }, [userAuth])
+
     return (
         <div className="bg-gray-900 h-screen">
             <div className="min-h-full flex items-center justify-center pb-36 px-6 sm:px-6 lg:px-8">

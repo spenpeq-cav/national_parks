@@ -12,12 +12,17 @@
     .btn-primary {
         @apply bg-green-600 hover:bg-green-500
         focus:ring-green-500 focus:ring-opacity-50 
-        active:bg-green-700 active:text-yellow-300 text-white;
+        active:bg-green-700 active:text-yellow-300 text-gray-200;
     }
     .btn-secondary {
-        @apply bg-gray-300 hover:bg-gray-200
-        focus:ring-gray-300 focus:ring-opacity-50 
-        active:bg-gray-400 text-gray-800;
+        @apply bg-yellow-300 hover:bg-yellow-200
+        focus:ring-yellow-300 focus:ring-opacity-50 
+        active:bg-yellow-400 text-gray-900;
+    }
+    .btn-profile {
+        @apply bg-blue-400 hover:bg-blue-300
+        focus:ring-blue-400 focus:ring-opacity-50 
+        active:bg-blue-500 text-gray-900;
     }
 
 

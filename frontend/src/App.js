@@ -22,7 +22,7 @@ function App() {
         <Route path='/login' component={LoginScreen} />
         <Route path='/register' component={RegisterScreen} />
         <Route path='/profile' component={ProfileScreen} />
-    </Switch> 
+      </Switch> 
     </div>
     
   );

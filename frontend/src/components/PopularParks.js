@@ -71,19 +71,9 @@ function PopularParks() {
                     </div>
                 </div>
                 ) : 
-                    <div className="grid grid-cols-3 gap-4">
-                        <div className="2xl:my-5 2xl:py-16 2xl:px-12 w-full relative">
-                            <div className="text-center p-24">
-                                <ClipLoader color={"white"} size={150} />
-                            </div>
-                        </div>
-                        <div className="2xl:my-5 2xl:py-16 2xl:px-12 w-full relative">
-                            <div className="text-center p-24">
-                                <ClipLoader color={"white"} size={150} />
-                            </div>
-                        </div>
-                        <div className="2xl:my-5 2xl:py-16 2xl:px-12 w-full relative">
-                            <div className="text-center p-24">
+                    <div className="text-center">
+                        <div className="2xl:pb-52 2xl:px-12 w-full relative">
+                            <div className="text-center p-16">
                                 <ClipLoader color={"white"} size={150} />
                             </div>
                         </div>

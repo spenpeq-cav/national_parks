@@ -50,8 +50,8 @@ function Navbar() {
                     { userAuth ? 
                         <Fragment>
                             <a className="text-gray-200 px-4">Welcome, {userData.first}</a>
-                            <Link className="px-4 text-red-300 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg" onClick={handleLogOut}>Log Out</Link>
-                            <Link className="px-4 text-blue-300 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg" to="/profile">Profile</Link> 
+                            <Link className="px-4 text-red-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg" onClick={handleLogOut}>Log Out</Link>
+                            <Link className="px-4 text-blue-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg" to="/profile">My Profile</Link> 
                         </Fragment> : 
                             <Link className="px-4 text-yellow-300 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg" to="/login">Log In</Link> 
                         }
@@ -64,7 +64,14 @@ function Navbar() {
                     <button className="items-center" onClick={toggleMobileMenu}><i class="fas fa-bars text-gray-300 h-8 w-8"></i></button>
                 </div>
                 <div className={mobileMenuHidden ? "hidden" : "lg:hidden"}>
-                    <Link className="px-4 py-2 text-yellow-300 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg block mt-2" to="/" onClick={toggleMobileMenu}>Log In</Link>
+                    { userAuth ? 
+                        <Fragment>
+                            <a className="text-gray-200 px-4 py-2 block">Welcome, {userData.first}</a>
+                            <Link className="px-4 text-red-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg block" onClick={() => {handleLogOut(); toggleMobileMenu()}}>Log Out</Link>
+                            <Link className="px-4 text-blue-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg block" to="/profile" onClick={toggleMobileMenu}>My Profile</Link> 
+                        </Fragment> : 
+                            <Link className="px-4 py-2 text-yellow-300 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg block" to="/login" onClick={toggleMobileMenu}>Log In</Link>
+                            }
                     <Link className="px-4 py-2 text-gray-400 uppercase hover:text-gray-200 tracking-wider text-sm block" to="/" onClick={toggleMobileMenu}>Home</Link>
                     <Link className="px-4 py-2 text-gray-400 uppercase hover:text-gray-200 tracking-wider text-sm block" to="/explore" onClick={toggleMobileMenu}>Explore</Link>
                     <Link className="px-4 py-2 text-gray-400 uppercase hover:text-gray-200 tracking-wider text-sm block" to="/about" onClick={toggleMobileMenu}>About</Link>
