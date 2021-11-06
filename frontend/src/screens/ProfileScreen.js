@@ -9,6 +9,7 @@ function ProfileScreen() {
     const [userData, setUserData] = useState([])
     const [loaded, setLoaded] = useState(false)
     const [userAuth, setUserAuth] = useState(false)
+    const [dataLoaded, setDataLoaded] = useState(false)
 
     const checkUserAuth = async() => {
         await axios.get("/userauth", {withCredentials: true})
@@ -20,6 +21,7 @@ function ProfileScreen() {
         const res = await axios.get("/user", {withCredentials: true})
         const data = res.data
         setUserData(data)
+        setDataLoaded(true)
     }
 
     useEffect(() => {
@@ -35,11 +37,24 @@ function ProfileScreen() {
 
     return (
         <div className="bg-black h-screen">
-            { userAuth ? (
+            { dataLoaded ? (
             <div className="text-center text-gray-200">
                 <h1>{userData.first}</h1>
                 <h1>{userData.last}</h1>
                 <h1>{userData.username}</h1>
+
+                <h1>My Favorites</h1>
+                { userData.favorites.length > 0 ? (
+                    <ui className="list-none">
+                        {userData.favorites.map((fav) => 
+                        <li key={userData.favorites.index}>
+                            - {fav}
+                        </li>)}
+                    </ui>
+                    )
+                     : <h1>You have no favorites yet!</h1>
+                }
+                 
             </div>
             ) : (
                 <div className="text-center bg-black h-screen">

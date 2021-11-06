@@ -20,6 +20,13 @@ function ParkScreen({ match }) {
         setLoaded(true)
     }
 
+    const handleAddFavorite = () => {
+        axios.post("/addfavorite", { parkCode: parkcode })
+            .then((res) => {
+                console.log(res)
+            })
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0)
         getData()
@@ -40,6 +47,7 @@ function ParkScreen({ match }) {
 
                         <div className="w-full lg:text-center bg-black px-16 py-6 md:grid md:grid-cols-2 lg:grid-cols-4 lg:gap-4 2xl:px-56 lg:py-6">
                             <div className="py-2">
+                                <button className="flex text-white border border-white" onClick={handleAddFavorite}>Star Button</button>
                                 <h1 className="text-white text-lg uppercase font-bold">Location</h1>
                                 <p className="text-white">{data.addresses[0].city}, {data.addresses[0].stateCode}</p>
                             </div>

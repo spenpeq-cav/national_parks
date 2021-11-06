@@ -19,7 +19,7 @@ app.use(session({
     name: "natparks",
     cookie: {
         httpOnly: true,
-        maxAge: 600000
+        maxAge: 86400000
     },
     resave: false,
     saveUninitialized: false
@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
     last: String,
     email: String,
     password: String,
+    favorites: [String],
 })
 
 userSchema.plugin(passportLocalMongoose)
@@ -76,6 +77,7 @@ app.get("/logout", function(req, res){
         sameSite: "none",    
         expires: new Date(1), 
     })
+    req.session.destroy()
 })
 
 app.post("/register", function(req, res){
@@ -119,6 +121,20 @@ app.post("/login", function(req, res, next){
         }
     })(req, res, next)
 })
+
+app.post("/addfavorite", (req, res) => {
+    if(req.isAuthenticated()){
+        User.findByIdAndUpdate(
+            req.user._id,
+            { $push: { favorites : req.body.parkCode}},
+            {upsert: true, new: true}, function(err, model) {
+                console.log(err)
+            }
+        )
+    } else {
+        res.send("Not Authenticated");
+    }
+});
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname+'/frontend/build/index.html'));
