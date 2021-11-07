@@ -45,9 +45,12 @@ function ParkScreen({ match }) {
                             </div>
                         </div>
 
-                        <div className="w-full lg:text-center bg-black px-16 py-6 md:grid md:grid-cols-2 lg:grid-cols-4 lg:gap-4 2xl:px-56 lg:py-6">
+                        <div className="w-full lg:text-center bg-black px-16 py-6 md:grid md:grid-cols-2 lg:grid-cols-5 lg:gap-4 2xl:px-56 lg:py-6">
+                            <div className="py-2 text-center">
+                                <button className="btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl" onClick={handleAddFavorite}><i class="far fa-star"></i></button>
+                                <p className="text-yellow-400 font-medium text-sm">Favorite</p>
+                            </div>
                             <div className="py-2">
-                                <button className="flex text-white border border-white" onClick={handleAddFavorite}>Star Button</button>
                                 <h1 className="text-white text-lg uppercase font-bold">Location</h1>
                                 <p className="text-white">{data.addresses[0].city}, {data.addresses[0].stateCode}</p>
                             </div>
@@ -60,7 +63,7 @@ function ParkScreen({ match }) {
                                 <p className="text-white">{data.contacts.phoneNumbers[0].phoneNumber}</p>
                             </div>
                             <div className="py-2">
-                                <a className="btn btn-secondary transform hover:scale-105 duration-350 py-3 w-full text-center" href={data.url} target="_blank" rel="noopener noreferrer">Learn More</a>
+                                <a className="btn btn-gray transform hover:scale-105 duration-350 py-3 w-full text-center" href={data.url} target="_blank" rel="noopener noreferrer">Learn More</a>
                             </div>
                         </div>
 
