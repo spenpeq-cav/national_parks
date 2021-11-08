@@ -7,6 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader"
 function ParkScreen({ match }) {
     const [data, setData] = useState([])
     const [loaded, setLoaded] = useState(false)
+    const [alreadyAFavorite, setAlreadyAFavorite] = useState(false)
     const parkcode = match.params.parkcode
     
     const base_url = 'https://developer.nps.gov/api/v1'
@@ -20,17 +21,29 @@ function ParkScreen({ match }) {
         setLoaded(true)
     }
 
-    const handleAddFavorite = () => {
-        axios.post("/addfavorite", { parkCode: parkcode })
-            .then((res) => {
-                console.log(res)
-            })
+    const checkFavorite = async() => {
+        const res = await axios.post("/checkFavorite", { parkcode: parkcode})
+        const data = res.data
+        setAlreadyAFavorite(data.alreadyAFavorite)
+        setAuth(data.auth)
+        setCheckFavoriteLoaded(true)
+        console.log(res)
+    }
+
+    const handleAddOrRemoveFavorite = async() => {
+        await axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: alreadyAFavorite})
+        .then((err) =>{
+            console.log(err)
+        })
     }
 
     useEffect(() => {
-        window.scrollTo(0, 0)
+        // window.scrollTo(0, 0)
         getData()
-    }, [])
+        if(loaded){
+            checkFavorite()
+        }
+    }, [loaded])
 
     return (
         <div>
@@ -47,8 +60,19 @@ function ParkScreen({ match }) {
 
                         <div className="w-full lg:text-center bg-black px-16 py-6 md:grid md:grid-cols-2 lg:grid-cols-5 lg:gap-4 2xl:px-56 lg:py-6">
                             <div className="py-2 text-center">
-                                <button className="btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl" onClick={handleAddFavorite}><i class="far fa-star"></i></button>
-                                <p className="text-yellow-400 font-medium text-sm">Favorite</p>
+                                { alreadyAFavorite ? (
+                                    <div>
+                                        <button className="bg-yellow-100 btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl" onClick={() => {handleAddOrRemoveFavorite();}}><i class="fas fa-star"></i></button>
+                                        <p className="text-yellow-400 font-medium text-sm">Remove Favorite</p>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <button className="btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl" onClick={() => {handleAddOrRemoveFavorite();}}><i class="far fa-star"></i></button>
+                                        <p className="text-yellow-400 font-medium text-sm">Add Favorite</p>
+                                    </div>
+                                )
+                            }
+                                
                             </div>
                             <div className="py-2">
                                 <h1 className="text-white text-lg uppercase font-bold">Location</h1>
