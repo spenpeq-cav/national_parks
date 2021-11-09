@@ -25,9 +25,6 @@ function ParkScreen({ match }) {
         const res = await axios.post("/checkFavorite", { parkcode: parkcode})
         const data = res.data
         setAlreadyAFavorite(data.alreadyAFavorite)
-        setAuth(data.auth)
-        setCheckFavoriteLoaded(true)
-        console.log(res)
     }
 
     const handleAddOrRemoveFavorite = async() => {

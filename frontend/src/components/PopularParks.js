@@ -10,30 +10,18 @@ function PopularParks() {
     const [popularParkData, setPopularParkData] = useState([])
     const [loaded, setLoaded] = useState(false)
 
-    const popularParkCodes = ['grsm','grca','yose','romo','zion','yell']
+    const popularParkCodes = 'yose,grca,yell'
 
     const base_url = 'https://developer.nps.gov/api/v1'
     const endpoint_url = '/parks?parkCode='+ popularParkCodes +'&api_key=' + process.env.REACT_APP_API_KEY
     const url = base_url + endpoint_url
 
-    const url1 = 'https://developer.nps.gov/api/v1/parks?parkCode='+ popularParkCodes[2] +'&api_key=' + process.env.REACT_APP_API_KEY
-    const url2 = 'https://developer.nps.gov/api/v1/parks?parkCode='+ popularParkCodes[1] +'&api_key=' + process.env.REACT_APP_API_KEY
-    const url3 = 'https://developer.nps.gov/api/v1/parks?parkCode='+ popularParkCodes[5] +'&api_key=' + process.env.REACT_APP_API_KEY
-
     const getPopularData = async() => {
-        const dataArray = []
-        const res1 = await axios.get(url1)
-        const data1 = res1.data.data[0]
-        dataArray.push(data1)
-        const res2 = await axios.get(url2)
-        const data2 = res2.data.data[0]
-        dataArray.push(data2)
-        const res3 = await axios.get(url3)
-        const data3 = res3.data.data[0]
-        dataArray.push(data3)
-
-        setPopularParkData(dataArray)
+        const res = await axios.get(url)
+        const data = res.data.data
+        setPopularParkData(data)
         setLoaded(true)
+        console.log(popularParkData)
     }
 
     useEffect(() => {
@@ -46,9 +34,17 @@ function PopularParks() {
             { loaded ? (
                 <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-4">
                    <div className="md:px-16 lg:px-2 w-full relative p-2">
-                        <Link className="" to={`/explore/${popularParkData[0].parkCode}`}>
+                        <Link className="" to={`/explore/${popularParkData[2].parkCode}`}>
                             <div className="group">
-                                <img className="popular-home-card" src={popularParkData[0].images[0].url}/>
+                                <img className="popular-home-card" src={popularParkData[2].images[0].url}/>
+                                <div className="popular-home-card-text top-2 right-6 md:right-20 lg:right-6">{popularParkData[2].name}</div>
+                            </div>
+                        </Link>   
+                    </div>
+                    <div className="md:px-16 lg:px-2 w-full relative p-2">
+                        <Link className="" to={`/explore/${popularParkData[0].parkCode}`}>
+                            <div className="group h-full">
+                                <img className="popular-home-card h-full" src={popularParkData[0].images[1].url}/>
                                 <div className="popular-home-card-text top-2 right-6 md:right-20 lg:right-6">{popularParkData[0].name}</div>
                             </div>
                         </Link>   
@@ -56,16 +52,8 @@ function PopularParks() {
                     <div className="md:px-16 lg:px-2 w-full relative p-2">
                         <Link className="" to={`/explore/${popularParkData[1].parkCode}`}>
                             <div className="group h-full">
-                                <img className="popular-home-card h-full" src={popularParkData[1].images[1].url}/>
+                                <img className="popular-home-card h-full" src={popularParkData[1].images[0].url}/>
                                 <div className="popular-home-card-text top-2 right-6 md:right-20 lg:right-6">{popularParkData[1].name}</div>
-                            </div>
-                        </Link>   
-                    </div>
-                    <div className="md:px-16 lg:px-2 w-full relative p-2">
-                        <Link className="" to={`/explore/${popularParkData[2].parkCode}`}>
-                            <div className="group h-full">
-                                <img className="popular-home-card h-full" src={popularParkData[2].images[0].url}/>
-                                <div className="popular-home-card-text top-2 right-6 md:right-20 lg:right-6">{popularParkData[2].name}</div>
                             </div>
                         </Link>   
                     </div>

@@ -27,23 +27,16 @@ function ProfileScreen() {
     }
 
     const getUserFavoritesParkData = async() => {
+        const favoriteParksString = userData.favorites.toString()
+
         const base_url = 'https://developer.nps.gov/api/v1'
-        const endpoint_url = '/parks?limit=500&api_key=' + process.env.REACT_APP_API_KEY
+        const endpoint_url = '/parks?parkCode='+ favoriteParksString +'&api_key=' + process.env.REACT_APP_API_KEY
         const url = base_url + endpoint_url
 
         const res = await axios.get(url)
         const data = res.data.data
-
-        var favData = []
-    
-        for(var i = 0; i < userData.favorites.length; i++){
-            for(var j = 0; j < data.length; j++ ){
-                if(data[j].parkCode === userData.favorites[i]){
-                    favData.push(data[j])
-                }
-            }
-        }
-        setFavoritesData(favData)
+        
+        setFavoritesData(data)
         setFavoritesDataLoaded(true)
     }
 
