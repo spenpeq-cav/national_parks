@@ -95,7 +95,7 @@ app.post("/checkFavorite", function(req, res){
                 for(var i = 0; i < doc.favorites.length; i++){
                     if(doc.favorites[i] == parkcode){
                         alreadyAFavorite = true
-                        res.send({alreadyAFavorite: alreadyAFavorite})
+                        res.send({alreadyAFavorite: alreadyAFavorite, auth: true})
                         break;
                     }
                 }

@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import GoogleMaps from '../components/GoogleMaps';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader"
 
 function ParkScreen({ match }) {
     const [data, setData] = useState([])
     const [loaded, setLoaded] = useState(false)
     const [alreadyAFavorite, setAlreadyAFavorite] = useState(false)
+    const [auth, setAuth] = useState(false)
     const parkcode = match.params.parkcode
     
     const base_url = 'https://developer.nps.gov/api/v1'
@@ -25,17 +26,23 @@ function ParkScreen({ match }) {
         const res = await axios.post("/checkFavorite", { parkcode: parkcode})
         const data = res.data
         setAlreadyAFavorite(data.alreadyAFavorite)
+        setAuth(true)
     }
 
     const handleAddOrRemoveFavorite = async() => {
-        await axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: alreadyAFavorite})
-        .then((err) =>{
-            console.log(err)
-        })
+        if(auth){
+            await axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: alreadyAFavorite})
+            .then((res) =>{
+                console.log("Added")
+            })
+            .catch((err) =>{
+                console.log(err)
+            })
+        }
     }
 
     useEffect(() => {
-        // window.scrollTo(0, 0)
+        window.scrollTo(0, 0)
         getData()
         if(loaded){
             checkFavorite()
@@ -59,12 +66,11 @@ function ParkScreen({ match }) {
                             <div className="py-2 text-center">
                                 { alreadyAFavorite ? (
                                     <div>
-                                        <button className="bg-yellow-100 btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl" onClick={() => {handleAddOrRemoveFavorite();}}><i class="fas fa-star"></i></button>
-                                        <p className="text-yellow-400 font-medium text-sm">Remove Favorite</p>
+                                        <Link to="/profile" className="bg-yellow-100 btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl"><i class="fas fa-star"></i></Link>
                                     </div>
                                 ) : (
                                     <div>
-                                        <button className="btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl" onClick={() => {handleAddOrRemoveFavorite();}}><i class="far fa-star"></i></button>
+                                        <button className="btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl" onClick={handleAddOrRemoveFavorite()}><i class="far fa-star"></i></button>
                                         <p className="text-yellow-400 font-medium text-sm">Add Favorite</p>
                                     </div>
                                 )
@@ -126,7 +132,10 @@ function ParkScreen({ match }) {
                                         </ui>
                                     </p>
                                 </div>
-                                <img src={data.images[2].url}/>
+                                
+                                { data.images.length > 2 ? <><img src={data.images[2].url}/></>
+                                    : <><img src={data.images[1].url} /></> }
+                                
                             </div>
                         </div>
 

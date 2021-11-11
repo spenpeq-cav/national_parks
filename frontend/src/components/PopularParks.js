@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import ReactJson from 'react-json-view';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -21,7 +20,6 @@ function PopularParks() {
         const data = res.data.data
         setPopularParkData(data)
         setLoaded(true)
-        console.log(popularParkData)
     }
 
     useEffect(() => {

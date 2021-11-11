@@ -12,6 +12,7 @@ function ProfileScreen() {
     const [dataLoaded, setDataLoaded] = useState(false)
     const [favoritesData, setFavoritesData] = useState([])
     const [favoritesDataLoaded, setFavoritesDataLoaded] = useState(false)
+    const [removeToggled, setRemoveToggled] = useState(false)
 
     const checkUserAuth = async() => {
         await axios.get("/userauth", {withCredentials: true})
@@ -35,7 +36,7 @@ function ProfileScreen() {
 
         const res = await axios.get(url)
         const data = res.data.data
-        
+
         setFavoritesData(data)
         setFavoritesDataLoaded(true)
     }
@@ -65,7 +66,9 @@ function ProfileScreen() {
                     </div>
                     
                     <div className="text-center pt-6">
-                        <h1 className="text-4xl text-yellow-300">My Favorite Parks</h1>
+                        <h1 className="text-5xl text-yellow-300 my-2">My Favorite Parks</h1>
+                        <button className="btn btn-other px-4 py-1 my-2 text-xs font-bold" onClick={() => setRemoveToggled(!removeToggled)}><i class="fas fa-times"></i> Toggle Remove</button>
+                        <p className={removeToggled ? "text-xs text-red-500" : "hidden"}>Click a Park to Remove From Favorties</p>
                     </div>
                     { favoritesDataLoaded ? (
                         <div>
@@ -78,7 +81,7 @@ function ProfileScreen() {
                                                     <img className="popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90" src={park.images[0].url}/>
                                                     <div className="popular-explore-card-text top-6 right-8">{park.name}</div>
                                                 </div>
-                                            </Link>   
+                                            </Link> 
                                         </div>
                                     ))}
                                 </div> ) : (
