@@ -25,6 +25,7 @@ function ProfileScreen() {
         const data = res.data
         setUserData(data)
         setDataLoaded(true)
+        console.log(data)
     }
 
     const getUserFavoritesParkData = async() => {
@@ -41,6 +42,26 @@ function ProfileScreen() {
         setFavoritesDataLoaded(true)
     }
 
+    const handleRemoveFavorite = async(parkcode) => {
+        if(userAuth && removeToggled){
+            await axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: true})
+            .then((res) =>{
+                console.log("Removed")
+            })
+            .catch((err) =>{
+                console.log(err)
+            })
+            var spliceData = favoritesData
+            for(var i = 0; i < favoritesData.length; i++){
+                if(favoritesData[i] === parkcode){
+                    spliceData.splice(i,1)
+                }
+            }
+            setFavoritesData(spliceData)
+
+        }
+    }
+
     useEffect(() => {
         checkUserAuth()
         if(loaded){
@@ -53,10 +74,10 @@ function ProfileScreen() {
         if(dataLoaded){
             getUserFavoritesParkData()
         }
-    }, [loaded, userAuth, dataLoaded])
+    }, [loaded, userAuth, dataLoaded, favoritesData])
 
     return (
-        <section className="bg-black py-16 3xl:h-screen">
+        <section className="bg-gray-900 py-16 h-screen">
             { dataLoaded ? (
                 <div className="text-gray-200 px-16">
                     <h1 className="text-6xl bold text-center text-green-500">Hello, {userData.first}!</h1>
@@ -67,19 +88,19 @@ function ProfileScreen() {
                     
                     <div className="text-center pt-6">
                         <h1 className="text-5xl text-yellow-300 my-2">My Favorite Parks</h1>
-                        <button className="btn btn-other px-4 py-1 my-2 text-xs font-bold" onClick={() => setRemoveToggled(!removeToggled)}><i class="fas fa-times"></i> Toggle Remove</button>
-                        <p className={removeToggled ? "text-xs text-red-500" : "hidden"}>Click a Park to Remove From Favorties</p>
+                        <button className={userData.favorites.length > 0 ? "btn btn-other px-4 py-1 my-2 text-xs font-bold" : "hidden"} onClick={() => setRemoveToggled(!removeToggled)}><i class="fas fa-times"></i> Toggle Remove</button>
+                        <p className={removeToggled ? "text-xs text-red-500" : "hidden"}>Click a Park to Remove From Favorties.</p>
                     </div>
                     { favoritesDataLoaded ? (
                         <div>
                             { userData.favorites.length > 0 ? (
                                 <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64">
                                     { favoritesData.map((park) => (
-                                        <div className="p-4 w-auto relative h-48 my-4 md:h-56 xl:h-64 2xl:h-80">
-                                            <Link className="" to={`/explore/${park.parkCode}`}>
-                                                <div className="group w-full h-48 md:h-56 xl:h-64 2xl:h-80">
-                                                    <img className="popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90" src={park.images[0].url}/>
-                                                    <div className="popular-explore-card-text top-6 right-8">{park.name}</div>
+                                        <div key={favoritesData.id} className="p-4 w-auto relative h-48 my-4 md:h-56 xl:h-64 2xl:h-80">
+                                            <Link className="" to={removeToggled ? "#" : `/explore/${park.parkCode}`} onClick={() => handleRemoveFavorite(park.parkCode)}>
+                                                <div className={removeToggled ? "group w-full h-48 md:h-56 xl:h-64 2xl:h-80 bg-red-600" : "group w-full h-48 md:h-56 xl:h-64 2xl:h-80"}>
+                                                    <img className={removeToggled ? "popular-explore-card-remove object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-80" : "popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90"} src={park.images[0].url}/>
+                                                    <div className={removeToggled ? "popular-explore-card-text-remove top-6 right-8" : "popular-explore-card-text top-6 right-8"}>{park.name}</div>
                                                 </div>
                                             </Link> 
                                         </div>
@@ -93,14 +114,14 @@ function ProfileScreen() {
                                 )
                             }
                         </div> ) : (
-                            <div className="text-center bg-black h-screen mt-24">
+                            <div className="text-center bg-gray-900 mt-24">
                                 <ClipLoader color={"white"} size={120}/>
                              </div>
                         )}
                     
                 </div> 
                 ) : (
-                    <div className="text-center bg-black h-screen mt-24">
+                    <div className="text-center bg-gray-900 mt-24">
                         <ClipLoader color={"white"} size={150}/>
                     </div>
                 )}

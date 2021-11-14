@@ -20,6 +20,7 @@ function ParkScreen({ match }) {
         const data = res.data.data[0]
         setData(data)
         setLoaded(true)
+        console.log("Got data")
     }
 
     const checkFavorite = async() => {
@@ -27,22 +28,22 @@ function ParkScreen({ match }) {
         const data = res.data
         setAlreadyAFavorite(data.alreadyAFavorite)
         setAuth(true)
+        console.log("Checked fav")
     }
 
     const handleAddOrRemoveFavorite = async() => {
-        if(auth){
-            await axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: alreadyAFavorite})
-            .then((res) =>{
-                console.log("Added")
-            })
-            .catch((err) =>{
-                console.log(err)
-            })
-        }
+        
+        await axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: alreadyAFavorite})
+        .then((res) =>{
+            console.log("Added")
+        })
+        .catch((err) =>{
+            console.log(err)
+        })
+        
     }
 
     useEffect(() => {
-        window.scrollTo(0, 0)
         getData()
         if(loaded){
             checkFavorite()
@@ -70,7 +71,7 @@ function ParkScreen({ match }) {
                                     </div>
                                 ) : (
                                     <div>
-                                        <button className="btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl" onClick={handleAddOrRemoveFavorite()}><i class="far fa-star"></i></button>
+                                        <button className="btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl" onClick={() => handleAddOrRemoveFavorite()}><i class="far fa-star"></i></button>
                                         <p className="text-yellow-400 font-medium text-sm">Add Favorite</p>
                                     </div>
                                 )

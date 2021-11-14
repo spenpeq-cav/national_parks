@@ -59,4 +59,15 @@
         @apply absolute text-black text-opacity-100 font-bold text-base pt-1
         group-hover:text-green-600 transform group-hover:scale-110 duration-500;
     }
+
+    .popular-explore-card-remove {
+        @apply rounded-lg shadow-md object-cover 
+        border-solid border-2 border-red-700 hover:border-red-500 border-opacity-95
+        hover:shadow-2xl transform group-hover:scale-105 duration-500 active:border-red-900;
+    }
+
+    .popular-explore-card-text-remove {
+        @apply absolute text-red-700 text-opacity-100 font-bold text-base pt-1
+        group-hover:text-red-500 transform group-hover:scale-110 duration-500;
+    }
 }

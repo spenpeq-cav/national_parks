@@ -69,11 +69,12 @@ app.get("/userauth", (req, res) => {
 });
 
 app.get("/logout", function(req, res){
+    req.logOut()
     req.session.destroy()
     res.clearCookie("natparks", {
         path: "/",
         httpOnly: true, 
-        secure: true,
+        secure: "none",
         sameSite: "none",    
         expires: new Date(1), 
     })
