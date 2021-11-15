@@ -36,14 +36,15 @@ function ParkScreen({ match }) {
     }
 
     const handleAddOrRemoveFavorite = () => {
-        if(user){
-            axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: alreadyAFavorite})
+        if(user && alreadyAFavorite === false){
+            axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: false})
             .then((res) =>{
                 console.log(res)
             })
             .catch((err) =>{
                 console.log(err)
             })
+
             if(!alreadyAFavorite){
                 setUser((prevState) => ({
                     ...prevState,
@@ -51,16 +52,17 @@ function ParkScreen({ match }) {
                 }))
             }
             console.log("Added")
-            setAlreadyAFavorite(!alreadyAFavorite)
-        }
-        
+            setAlreadyAFavorite(true)
+        }  
     }
 
     useEffect(() => {
         if(!loaded){
             getData()
         }
-        checkFavorite()
+        if(user){
+            checkFavorite()
+        }
         console.log("useEffect")
     }, [alreadyAFavorite, user])
 
