@@ -143,7 +143,13 @@ app.post("/login", function(req, res, next){
                 if(err) {
                     console.log(err)
                 }
-                res.redirect("/profile")
+                res.send({
+                    "user": {
+                        "username": user.username, 
+                        "first": user.first,
+                        "last": user.last,
+                        "favorites": user.favorites
+                }})
             })
         }
     })(req, res, next)

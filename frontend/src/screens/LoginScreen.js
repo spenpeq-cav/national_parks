@@ -1,23 +1,54 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 function LoginScreen() {
 
     const history = useHistory()
     const [userAuth, setUserAuth] = useState(false)
+    
 
-    const checkUserAuth = async() => {
-        await axios.get("/userauth", {withCredentials: true})
-            .then((res) => (setUserAuth(res.data.auth)))
+    // const checkUserAuth = async() => {
+    //     await axios.get("/userauth", {withCredentials: true})
+    //         .then((res) => (setUserAuth(res.data.auth)))
+    // }
+    const INITIAL_FORM_STATE = {
+        username: "",
+        password: "",
+    };
+    const { user, setUser } = useContext(UserContext);
+    const [formData, setFormData] = useState(INITIAL_FORM_STATE);
+
+    function handleInputChange(e) {
+        setFormData((prevState) => ({
+          ...prevState,
+          [e.target.name]: e.target.value,
+        }));
+      }
+    
+    function handleSubmitForm(e) {
+        e.preventDefault();
+
+        if (formData.username !== "" && formData.password !== "") {
+                axios.post("/login", formData, {withCredentials: true})
+                    .then((res) => {
+                        setUser(res.data.user)
+                        history.push("/profile")
+                    })
+            ;
+            alert("Form submited");
+        } else {
+            alert("Fill out all fields");
+        }
     }
     
-    useEffect(() => {
-        checkUserAuth()
-        if(userAuth){
-            history.goBack()
-        }
-    }, [userAuth])
+    // useEffect(() => {
+    //     checkUserAuth()
+    //     if(userAuth){
+    //         history.goBack()
+    //     }
+    // }, [userAuth])
 
     return (
         <div className="bg-gray-900 h-screen">
@@ -32,7 +63,7 @@ function LoginScreen() {
                             </a>
                         </p>
                     </div>
-                    <form className="mt-8 space-y-6" action="/login" method="POST">
+                    <form className="mt-8 space-y-6" action="/login" method="POST" onSubmit={handleSubmitForm}>
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="pb-2">
@@ -40,6 +71,7 @@ function LoginScreen() {
                                 Email address
                                 </label>
                                 <input id="email-address" name="username" type="email" autoComplete="email" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-lg" placeholder="Email address"
+                                onChange={handleInputChange}
                                 />
                             </div>
                             <div>
@@ -54,6 +86,7 @@ function LoginScreen() {
                                 required
                                 className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-lg"
                                 placeholder="Password"
+                                onChange={handleInputChange}
                                 />
                             </div>
                         </div>
