@@ -24,7 +24,8 @@ function PopularParks() {
 
     useEffect(() => {
         getPopularData()
-    }, [loaded])
+        console.log("UseEffect Home")
+    }, [])
 
     return (
         <div>

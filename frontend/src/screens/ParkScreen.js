@@ -1,14 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import GoogleMaps from '../components/GoogleMaps';
 import { Link } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader"
+import { UserContext } from '../context/UserContext'
 
 function ParkScreen({ match }) {
     const [data, setData] = useState([])
     const [loaded, setLoaded] = useState(false)
     const [alreadyAFavorite, setAlreadyAFavorite] = useState(false)
-    const [auth, setAuth] = useState(false)
+    const [favorites, setFavorites] = useState([])
+    const { user, setUser } = useContext(UserContext);
+
     const parkcode = match.params.parkcode
     
     const base_url = 'https://developer.nps.gov/api/v1'
@@ -23,32 +26,43 @@ function ParkScreen({ match }) {
         console.log("Got data")
     }
 
-    const checkFavorite = async() => {
-        const res = await axios.post("/checkFavorite", { parkcode: parkcode})
-        const data = res.data
-        setAlreadyAFavorite(data.alreadyAFavorite)
-        setAuth(true)
-        console.log("Checked fav")
+    function checkFavorite(){
+        for(var i = 0; i < user.favorites.length; i++){
+            if(user.favorites[i] === parkcode){
+                setAlreadyAFavorite(true);
+                break;
+            }
+        }
     }
 
-    const handleAddOrRemoveFavorite = async() => {
-        
-        await axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: alreadyAFavorite})
-        .then((res) =>{
+    const handleAddOrRemoveFavorite = () => {
+        if(user){
+            axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: alreadyAFavorite})
+            .then((res) =>{
+                console.log(res)
+            })
+            .catch((err) =>{
+                console.log(err)
+            })
+            if(!alreadyAFavorite){
+                setUser((prevState) => ({
+                    ...prevState,
+                    favorites: [...prevState.favorites, parkcode]
+                }))
+            }
             console.log("Added")
-        })
-        .catch((err) =>{
-            console.log(err)
-        })
+            setAlreadyAFavorite(!alreadyAFavorite)
+        }
         
     }
 
     useEffect(() => {
-        getData()
-        if(loaded){
-            checkFavorite()
+        if(!loaded){
+            getData()
         }
-    }, [loaded])
+        checkFavorite()
+        console.log("useEffect")
+    }, [alreadyAFavorite, user])
 
     return (
         <div>
