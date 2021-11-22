@@ -8,6 +8,7 @@ function ExploreScreen() {
   const [state, setState] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
   const [filterNPOnly, setFilterNPOnly] = useState(false)
+  const [listView, setListView] = useState(false)
   const [loaded, setLoaded] = useState(true)
 
   const stateCodes = [
@@ -58,6 +59,10 @@ function ExploreScreen() {
     setFilterNPOnly(!filterNPOnly)
   }
 
+  const handleListView = () => {
+    setListView(!listView)
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -89,29 +94,49 @@ function ExploreScreen() {
           <input type="checkbox" checked={filterNPOnly} onChange={handleFilterNPOnly} className="appearance-none border border-gray-400 rounded-lg h-6 w-6 lg:w-6 lg:h-4 checked:bg-green-500 checked:border-transparent"/>
           <span className="pl-2 text-gray-900 font-medium lg:text-sm lg:font-normal">National Parks Only</span>
         </label>
+
+        <label className="inline-flex items-center justify-center py-2 lg:pl-4 lg:w-48">
+          <input type="checkbox" checked={listView} onChange={handleListView} className="appearance-none border border-gray-400 rounded-lg h-6 w-6 lg:w-6 lg:h-4 checked:bg-green-500 checked:border-transparent"/>
+          <span className="pl-2 text-gray-900 font-medium lg:text-sm lg:font-normal">Simple List View</span>
+        </label>
         
       </div>
-
-      { loaded ? 
-        <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64">
-          { data.map((park) => (
-            <div className="p-4 w-auto relative h-48 my-6 md:h-56 xl:h-64 2xl:h-80">
-              <Link className="" to={`/explore/${park.parkCode}`}>
-                <div className="group w-full h-48 md:h-56 xl:h-64 2xl:h-80">
-                  <img className="popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90" src={park.images[0].url}/>
-                  <div className="popular-explore-card-text top-6 right-8">{park.name}</div>
+      
+      { loaded ? (
+        <div>
+          { listView ? (
+            <div className="">
+              { data.map((park) => (
+                <div className="grid grid-cols-3 border-solid border-2 border-black">
+                  <div className="py-4">{park.name}</div>
+                  <div className="py-4">{park.designation}</div>  
+                  <Link className="" to={`/explore/${park.parkCode}`}>View</Link>
                 </div>
-              </Link>   
+              ))}
             </div>
-          ))}
-        </div> : 
+          ) : (
+            <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64">
+              { data.map((park) => (
+                <div className="p-4 w-auto relative h-48 my-6 md:h-56 xl:h-64 2xl:h-80">
+                  <Link className="" to={`/explore/${park.parkCode}`}>
+                    <div className="group w-full h-48 md:h-56 xl:h-64 2xl:h-80">
+                      <img className="popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90" src={park.images[0].url}/>
+                      <div className="popular-explore-card-text top-6 right-8">{park.name}</div>
+                    </div>
+                  </Link>   
+                </div>
+              ))}
+            </div>
+          )}
+        </div> )
+        
+        : 
         <div className="w-full relative py-16">
             <div className="text-center">
               <ClipLoader color={"white"} size={150} />
             </div>
         </div>
       }
-
       
     </section>
   );
