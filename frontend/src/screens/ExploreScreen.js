@@ -4,11 +4,39 @@ import { Link } from 'react-router-dom'
 import ClipLoader from "react-spinners/ClipLoader"
 
 function ExploreScreen() {
+  const INITIAL_FORM_STATE = {
+    state: "",
+    query: "",
+    NPOnly: false,
+    list: false
+  }
+  const [formState, setFormState] = useState(() => {
+    const localExploreFormData = localStorage.getItem("explore-form");
+    return localExploreFormData !== null ? JSON.parse(localExploreFormData) : INITIAL_FORM_STATE
+  })
+
+  const [state, setState] = useState(() => {
+    const localExploreFormData = localStorage.getItem("explore-form");
+    return localExploreFormData !== null ? JSON.parse(localExploreFormData).state : ""
+  })
+  const [searchQuery, setSearchQuery] = useState(() => {
+    const localExploreFormData = localStorage.getItem("explore-form");
+    return localExploreFormData !== null ? JSON.parse(localExploreFormData).query : ""
+  })
+  const [filterNPOnly, setFilterNPOnly] = useState(() => {
+    const localExploreFormData = localStorage.getItem("explore-form");
+    return localExploreFormData !== null ? JSON.parse(localExploreFormData).NPOnly : false
+  })
+  const [listView, setListView] = useState(() => {
+    const localExploreFormData = localStorage.getItem("explore-form");
+    return localExploreFormData !== null ? JSON.parse(localExploreFormData).list : false
+  })
+
   const [data, setData] = useState([])
-  const [state, setState] = useState("")
-  const [searchQuery, setSearchQuery] = useState("")
-  const [filterNPOnly, setFilterNPOnly] = useState(false)
-  const [listView, setListView] = useState(false)
+  // const [state, setState] = useState("")
+  // const [searchQuery, setSearchQuery] = useState("")
+  // const [filterNPOnly, setFilterNPOnly] = useState(false)
+  // const [listView, setListView] = useState(false)
   const [loaded, setLoaded] = useState(true)
 
   const stateCodes = [
@@ -55,17 +83,60 @@ function ExploreScreen() {
     console.log(data)
   }
   
-  const handleFilterNPOnly = () => {
-    setFilterNPOnly(!filterNPOnly)
-  }
+  // const handleFilterNPOnly = () => {
+  //   setFilterNPOnly(!filterNPOnly)
+  // }
 
-  const handleListView = () => {
-    setListView(!listView)
-  }
+  // const handleListView = () => {
+  //   setListView(!listView)
+  // }
 
+  const handleFormChange = (e) => {
+    const optionName = e.target.name
+    const value = e.target.value
+
+    switch(optionName){
+      case 'parkState':
+        setState(value)
+        setFormState((prevState) => ({
+          ...prevState,
+          state: value,
+        }))
+        break;
+
+      case 'query':
+        setSearchQuery(value)
+        setFormState((prevState) => ({
+          ...prevState,
+          query: value,
+        }))
+        break;
+
+      case 'NPOnly':
+        setFilterNPOnly(!filterNPOnly)
+        setFormState((prevState) => ({
+          ...prevState,
+          NPOnly: !filterNPOnly,
+        }))
+        break;
+
+      case 'list':
+        setListView(!listView)
+        setFormState((prevState) => ({
+          ...prevState,
+          list: !listView,
+        }))
+        break;
+    }
+  }
+  
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    if(formState){
+      localStorage.setItem("explore-form", JSON.stringify(formState))
+    } else {
+      localStorage.setItem("explore-form", JSON.stringify(INITIAL_FORM_STATE))
+    }
+  }, [formState])
 
   return (
     <section className="bg-explore-image bg-cover bg-center bg-fixed p-5 min-h-screen">
@@ -74,29 +145,29 @@ function ExploreScreen() {
       </div>
       
       <div className="bg-gray-200 shadow p-4 flex flex-col lg:flex-row mb-15 rounded mx-2 md:mx-4 lg:mx-12 xl:mx-16 2xl:mx-56">
-        <select className="border border-6 border-solid border-black rounded py-4 px-2 my-2 lg:py-4 lg:mr-8" onChange={(e) => {
-          setState(e.target.value)
+        <select className="border border-6 border-solid border-black rounded py-4 px-2 my-2 lg:py-4 lg:mr-8" name="parkState" onChange={(e) => {
+          handleFormChange(e)
         }}>
           <option value="" className="">  Select State</option>
           { stateCodes.map((state) => (
-            <option value={state.code} className="text-md w-auto">{state.name}</option>
+            <option selected={state.code === formState.state ? true: false} value={state.code} className="text-md w-auto">{state.name}</option>
           ))}
         </select>
         
-        <input className="w-full rounded border border-3 border-solid border-black py-4 px-2 my-2 lg:py-0" type="text" placeholder="Search term..." onChange={(e) => {
-          setSearchQuery(e.target.value)
+        <input className="w-full rounded border border-3 border-solid border-black py-4 px-2 my-2 lg:py-0" type="text" placeholder="Search term..." value={formState !== "" ? formState.query : null} name="query" onChange={(e) => {
+          handleFormChange(e)
         }}/>
         <button className="bg-green-500 hover:bg-green-400 rounded text-black py-4 my-2 lg:py-0 lg:px-4" onClick={() => getData()}>
           <p className="font-semibold text-lg lg:flex lg:flex-row"><i className="fas fa-search lg:p-1"></i> Search</p>
         </button>
         
         <label className="inline-flex items-center justify-center py-2 lg:pl-4 lg:w-48">
-          <input type="checkbox" checked={filterNPOnly} onChange={handleFilterNPOnly} className="appearance-none border border-gray-400 rounded-lg h-6 w-6 lg:w-6 lg:h-4 checked:bg-green-500 checked:border-transparent"/>
+          <input type="checkbox" checked={filterNPOnly} onChange={handleFormChange} name="NPOnly" className="appearance-none border border-gray-400 rounded-lg h-6 w-6 lg:w-6 lg:h-4 checked:bg-green-500 checked:border-transparent"/>
           <span className="pl-2 text-gray-900 font-medium lg:text-sm lg:font-normal">National Parks Only</span>
         </label>
 
         <label className="inline-flex items-center justify-center py-2 lg:pl-4 lg:w-48">
-          <input type="checkbox" checked={listView} onChange={handleListView} className="appearance-none border border-gray-400 rounded-lg h-6 w-6 lg:w-6 lg:h-4 checked:bg-green-500 checked:border-transparent"/>
+          <input type="checkbox" checked={listView} onChange={handleFormChange} name="list" className="appearance-none border border-gray-400 rounded-lg h-6 w-6 lg:w-6 lg:h-4 checked:bg-green-500 checked:border-transparent"/>
           <span className="pl-2 text-gray-900 font-medium lg:text-sm lg:font-normal">Simple List View</span>
         </label>
         
