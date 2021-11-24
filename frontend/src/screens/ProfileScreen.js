@@ -68,7 +68,7 @@ function ProfileScreen() {
     }, [user])
 
     return (
-        <section className="bg-gray-900 py-16 h-screen">
+        <section className="bg-gray-900 py-16 h-auto">
             { loaded ? (
                 <div className="text-gray-200 px-16">
                     <h1 className="text-6xl bold text-center text-green-500">Hello, {user.first}!</h1>

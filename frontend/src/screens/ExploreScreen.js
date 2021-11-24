@@ -178,8 +178,9 @@ function ExploreScreen() {
           { listView ? (
             <div className="">
               { data.map((park) => (
-                <div className="grid grid-cols-3 border-solid border-2 border-gray-900 text-center mx-4 my-4 lg:mx-12 xl:mx-16 2xl:mx-56 bg-gray-200 bg-opacity-70 rounded-md">
+                <div className="grid grid-cols-4 border-solid border-2 border-gray-900 text-center mx-4 my-4 lg:mx-12 xl:mx-16 2xl:mx-56 bg-gray-200 bg-opacity-70 rounded-md">
                   <div className="py-4 text-gray-900 text-xl font-bold">{park.name}</div>
+                  <div className="py-4 text-gray-900 text-md font-semibold">{park.states}</div>
                   <div className="py-4 text-gray-900 text-md font-semibold">{park.designation}</div>  
                   <Link className="btn bg-yellow-500 bg-opacity-90 transform hover:scale-105 duration-350 py-3 w-32 h-10 text-center text-sm m-auto" to={`/explore/${park.parkCode}`}>View</Link>
                 </div>
