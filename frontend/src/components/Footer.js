@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Footer() {
     return (
-        <div className="bg-black p-6 absolute w-full">
+        <div className="bg-black p-6  w-full">
             <div className="flex flex-col px-12 py-4 w-full lg:px-48 xl:px-64">
                 <div className="flex-auto text-center">
                     <Link className="text-green-600 uppercase font-bold tracking-wide text-xl" to="/"><i className="fas fa-mountain pr-1"></i> National Parks</Link>
