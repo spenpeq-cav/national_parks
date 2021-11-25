@@ -70,7 +70,7 @@
 
 [![Login][screenshot2]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-2.JPG)
 
-[![Explore][screenshot3]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-3.JPG)
+[![Explore][screenshot3]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-3.jpg)
 
 [![Park][screenshot4]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-4.JPG)
 
@@ -241,7 +241,7 @@ Project Link: [https://github.com/spenpeq/national_parks](https://github.com/spe
 
 [screenshot1]: images/nat-photo-1.JPG
 [screenshot2]: images/nat-photo-2.JPG
-[screenshot3]: images/nat-photo-3.JPG
+[screenshot3]: images/nat-photo-3.jpg
 [screenshot4]: images/nat-photo-4.JPG
 [screenshot5]: images/nat-photo-5.JPG
 [screenshot6]: images/nat-photo-6.JPG  
