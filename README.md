@@ -14,7 +14,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/spenpeq/national_parks">
-    <img src="images/nat-logo.jpg" alt="Logo" width="100" height="100">
+    <img src="images/nat-logo.JPG" alt="Logo" width="100" height="100">
   </a>
 
 <h3 align="center">National Parks Info Site</h3>
@@ -66,17 +66,17 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Home][screenshot1]](https://example.com)
+[![Home][screenshot1]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-1.JPG)
 
-[![Login][screenshot2]](https://example.com)
+[![Login][screenshot2]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-2.JPG)
 
-[![Explore][screenshot3]](https://example.com)
+[![Explore][screenshot3]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-3.jpg)
 
-[![Park][screenshot4]](https://example.com)
+[![Park][screenshot4]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-4.JPG)
 
-[![Park Topics and Map][screenshot5]](https://example.com)
+[![Park Topics and Map][screenshot5]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-5.JPG)
 
-[![Profile Screen][screenshot6]](https://example.com)
+[![Profile Screen][screenshot6]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-6.JPG)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -239,9 +239,9 @@ Project Link: [https://github.com/spenpeq/national_parks](https://github.com/spe
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username -->
 
-[screenshot1]: images/nat-photo-1.jpg
-[screenshot2]: images/nat-photo-2.jpg
-[screenshot3]: images/nat-photo-3.jpg
-[screenshot4]: images/nat-photo-4.jpg
-[screenshot5]: images/nat-photo-5.jpg
-[screenshot6]: images/nat-photo-6.jpg  
+[screenshot1]: images/nat-photo-1.JPG
+[screenshot2]: images/nat-photo-2.JPG
+[screenshot3]: images/nat-photo-3.JPG
+[screenshot4]: images/nat-photo-4.JPG
+[screenshot5]: images/nat-photo-5.JPG
+[screenshot6]: images/nat-photo-6.JPG  
