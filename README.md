@@ -70,7 +70,7 @@
 
 [![Login][screenshot2]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-2.JPG)
 
-[![Explore][screenshot3]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-3.jpg)
+[![Explore][screenshot3]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-3.JPG)
 
 [![Park][screenshot4]](https://github.com/spenpeq/national_parks/blob/master/images/nat-photo-4.JPG)
 
