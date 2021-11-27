@@ -2,12 +2,14 @@ import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import Alert from '../components/Alert';
 
 function LoginScreen() {
 
     const history = useHistory()
     const [userAuth, setUserAuth] = useState(false)
-    
+    const [alert, setAlert] = useState(false)
+    const [alertText, setAlertText] = useState("Nothing")
 
     // const checkUserAuth = async() => {
     //     await axios.get("/userauth", {withCredentials: true})
@@ -21,6 +23,7 @@ function LoginScreen() {
     const [formData, setFormData] = useState(INITIAL_FORM_STATE);
 
     function handleInputChange(e) {
+        e.preventDefault();
         setFormData((prevState) => ({
           ...prevState,
           [e.target.name]: e.target.value,
@@ -33,13 +36,17 @@ function LoginScreen() {
         if (formData.username !== "" && formData.password !== "") {
                 axios.post("/login", formData, {withCredentials: true})
                     .then((res) => {
-                        setUser(res.data.user)
-                        history.push("/profile")
+                        if(res.data.user !== undefined){
+                            setUser(res.data.user)
+                            history.push("/profile")
+                        } else {
+                            setAlertText(res.data.msg) 
+                            setAlert(true)
+                        }
                     })
-            ;
-            alert("Form submited");
         } else {
-            alert("Fill out all fields");
+            setAlertText({msg1: "Please fill out all fields."})
+            setAlert(true)
         }
     }
     
@@ -63,7 +70,7 @@ function LoginScreen() {
                             </a>
                         </p>
                     </div>
-                    <form className="mt-8 space-y-6" action="/login" method="POST" onSubmit={handleSubmitForm}>
+                    <form className="mt-8 space-y-4" action="/login" method="POST" onSubmit={handleSubmitForm}>
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="pb-2">
@@ -90,7 +97,7 @@ function LoginScreen() {
                                 />
                             </div>
                         </div>
-
+                        
                         <div className="flex items-center justify-between">
                             <div className="flex items-center">
                                 <input
@@ -122,7 +129,12 @@ function LoginScreen() {
                                 Sign in
                             </button>
                         </div>
+                        
                     </form>
+                    {alert && 
+                        <button type="button" className="w-full" onClick={() => setAlert(false)} >
+                            <Alert text={alertText} render={alert} />
+                        </button>}
                 </div>
             </div>
         </div>

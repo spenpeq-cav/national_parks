@@ -137,7 +137,7 @@ app.post("/login", function(req, res, next){
             console.log(err)
         }
         if(!user){
-            res.send("No User Exists")
+            res.send({msg: "No user with that email exist."})
         } else {
             req.logIn(user, err =>{
                 if(err) {
