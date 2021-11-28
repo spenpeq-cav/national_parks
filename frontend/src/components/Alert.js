@@ -3,10 +3,12 @@ import React from "react";
 function Alert(props) {
   return (
     <div
-      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      className={ props.variant !== "success" ? 
+        "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" : 
+        "bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative"}
       role="alert"
     >
-      <strong class="font-bold">{props.text && props.text}</strong>
+      <strong className="font-bold">{props.text && props.text}</strong>
       <span> Click to dismiss.</span>
       {/* <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
         <svg

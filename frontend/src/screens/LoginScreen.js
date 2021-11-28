@@ -1,16 +1,16 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import Alert from '../components/Alert';
 
 function LoginScreen() {
-
     const history = useHistory()
+    const location = useLocation()
     const [userAuth, setUserAuth] = useState(false)
     const [alert, setAlert] = useState(false)
-    const [alertText, setAlertText] = useState("Nothing")
-
+    const [alertText, setAlertText] = useState("")
+    const [alertVariant, setAlertVariant] = useState("error")
     // const checkUserAuth = async() => {
     //     await axios.get("/userauth", {withCredentials: true})
     //         .then((res) => (setUserAuth(res.data.auth)))
@@ -50,12 +50,13 @@ function LoginScreen() {
         }
     }
     
-    // useEffect(() => {
-    //     checkUserAuth()
-    //     if(userAuth){
-    //         history.goBack()
-    //     }
-    // }, [userAuth])
+    useEffect(() => {
+        if(location.text !== undefined){
+            setAlertText(location.text)
+            setAlert(true)
+            setAlertVariant("success")
+        }
+    }, [])
 
     return (
         <div className="bg-gray-900 h-screen">
@@ -70,6 +71,12 @@ function LoginScreen() {
                             </a>
                         </p>
                     </div>
+
+                    { alert && 
+                        <button type="button" className="w-full" onClick={() => setAlert(false)} >
+                            <Alert text={alertText} render={alert} variant={alertVariant} />
+                        </button> }
+
                     <form className="mt-8 space-y-4" action="/login" method="POST" onSubmit={handleSubmitForm}>
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
@@ -131,10 +138,7 @@ function LoginScreen() {
                         </div>
                         
                     </form>
-                    {alert && 
-                        <button type="button" className="w-full" onClick={() => setAlert(false)} >
-                            <Alert text={alertText} render={alert} />
-                        </button>}
+                    
                 </div>
             </div>
         </div>
