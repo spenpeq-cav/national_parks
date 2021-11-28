@@ -4,7 +4,8 @@ const path = require('path');
 const mongoose = require('mongoose')
 const session = require("express-session")
 const passport = require("passport")
-const passportLocalMongoose = require("passport-local-mongoose")
+const passportLocalMongoose = require("passport-local-mongoose");
+const { authenticate } = require('passport');
 
 const PORT = process.env.PORT || 3001;
 
@@ -113,19 +114,25 @@ app.post("/register", function(req, res){
             console.log(err)
         }
         if(doc){
-            res.send("User with that email already exists")
+            res.send({msg : "User with that email already exists"})
         }
         if(!doc){
-            User.register({username: req.body.username, first: req.body.firstName, last: req.body.lastName}, req.body.password, function(err, user){
+            User.register({username: req.body.username, first: req.body.first, last: req.body.last}, req.body.password, function(err, user){
                 if(err){
                     console.log(err)
                     res.redirect("/register")
-                } else {
-                    passport.authenticate("local")(req, res, function(){
-                        res.redirect("/profile")
-                    })
                 }
-                
+
+                passport.authenticate("local")(req,res,function(){
+                    res.send(user)
+                })
+                // else {
+                //     res.redirect("/login")
+                //     passport.authenticate("local")(req, res, function(){
+                //         console.log(res)
+                //         res.redirect("/profile")
+                //     })
+                // }
             })
         }
     })   
@@ -137,7 +144,7 @@ app.post("/login", function(req, res, next){
             console.log(err)
         }
         if(!user){
-            res.send("No User Exists")
+            res.send({msg: "No user with that email exist."})
         } else {
             req.logIn(user, err =>{
                 if(err) {
