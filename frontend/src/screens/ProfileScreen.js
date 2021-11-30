@@ -34,15 +34,6 @@ function ProfileScreen() {
                 .then((res) =>{
                     console.log("Removed")
                     console.log(res)
-                    // var spliceData = favoritesData
-                    // for(var i = 0; i < favoritesData.length; i++){
-                    //     if(favoritesData[i] === parkcode){
-                    //         spliceData.splice(i,1)
-                    //         break;
-                    //     }
-                    // }
-                    // setFavoritesData(spliceData)
-                    // console.log(spliceData) 
                 })
                 .catch((err) =>{
                     console.log(err)

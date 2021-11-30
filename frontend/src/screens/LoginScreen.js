@@ -7,14 +7,11 @@ import Alert from '../components/Alert';
 function LoginScreen() {
     const history = useHistory()
     const location = useLocation()
-    const [userAuth, setUserAuth] = useState(false)
+
     const [alert, setAlert] = useState(false)
     const [alertText, setAlertText] = useState("")
     const [alertVariant, setAlertVariant] = useState("error")
-    // const checkUserAuth = async() => {
-    //     await axios.get("/userauth", {withCredentials: true})
-    //         .then((res) => (setUserAuth(res.data.auth)))
-    // }
+
     const INITIAL_FORM_STATE = {
         username: "",
         password: "",
