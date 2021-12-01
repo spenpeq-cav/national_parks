@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ClipLoader from "react-spinners/ClipLoader"
 import { stateCodes } from '../constants/stateCodes';
+import ExploreParkCard from '../components/ExploreParkCard';
 
 function ExploreScreen() {
   const INITIAL_FORM_STATE = {
@@ -152,30 +153,30 @@ function ExploreScreen() {
           { listView ? (
             <div className="">
               { data.map((park) => (
-                <div className="grid grid-cols-4 border-solid border-2 border-gray-900 text-center mx-4 my-4 lg:mx-12 xl:mx-16 2xl:mx-56 bg-gray-200 bg-opacity-70 rounded-md">
-                  <div className="py-4 text-gray-900 text-xl font-bold">{park.name}</div>
-                  <div className="py-4 text-gray-900 text-md font-semibold">{park.states}</div>
-                  <div className="py-4 text-gray-900 text-md font-semibold">{park.designation}</div>  
-                  <Link className="btn bg-yellow-500 bg-opacity-90 transform hover:scale-105 duration-350 py-3 w-32 h-10 text-center text-sm m-auto" to={`/explore/${park.parkCode}`}>View</Link>
-                </div>
+                <ExploreParkCard 
+                  listView={listView} 
+                  name={park.name} 
+                  states={park.states} 
+                  designation={park.designation} 
+                  parkCode={park.parkCode} 
+                />
               ))}
             </div>
           ) : (
             <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64">
               { data.map((park) => (
-                <div className="p-4 w-auto relative h-48 my-6 md:h-56 xl:h-64 2xl:h-80">
-                  <Link className="" to={`/explore/${park.parkCode}`}>
-                    <div className="group w-full h-48 md:h-56 xl:h-64 2xl:h-80">
-                      <img className="popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90" src={park.images[0].url}/>
-                      <div className="popular-explore-card-text top-6 right-8">{park.name}</div>
-                    </div>
-                  </Link>   
-                </div>
+                <ExploreParkCard 
+                  listView={listView} 
+                  name={park.name} 
+                  states={park.states} 
+                  designation={park.designation} 
+                  parkCode={park.parkCode} 
+                  image={park.images[0].url} 
+                />
               ))}
             </div>
           )}
         </div> )
-        
         : 
         <div className="w-full relative py-16">
             <div className="text-center">
