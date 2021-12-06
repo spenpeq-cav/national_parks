@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import ClipLoader from "react-spinners/ClipLoader"
 import { stateCodes } from '../constants/stateCodes';
 import ExploreParkCard from '../components/ExploreParkCard';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function ExploreScreen() {
   const INITIAL_FORM_STATE = {
@@ -36,10 +37,15 @@ function ExploreScreen() {
 
   const [data, setData] = useState([])
   const [loaded, setLoaded] = useState(true)
-
+  const [hasMore, setHasMore] = useState(false)
+  const [splitData, setSplitData] = useState([])
+  const [scrollingData, setScrollingData] = useState([])
+  const [scrollIndex, setScrollIndex] = useState(0)
+  const [doneScrollDataLoad, setDoneScrollDataLoad] = useState(false)
 
   const getData = async() => {
     setLoaded(false)
+    setScrollIndex(0)
     const base_url = 'https://developer.nps.gov/api/v1'
     // var endpoint_url = ''
     if(searchQuery !== ""){
@@ -62,8 +68,30 @@ function ExploreScreen() {
       data = filteredData
     }
 
+    const splitArray = []
+    const chunkSize = 6
+    for(var i = 0; i < data.length; i += chunkSize){
+      const chunk = data.slice(i, i+chunkSize)
+      splitArray.push(chunk)
+    }
+    setSplitData(splitArray)
+    setScrollingData(splitArray[0])
+    setDoneScrollDataLoad(true)
     setData(data)
     setLoaded(true)
+    console.log("Got data")
+    setHasMore(true)
+  }
+  
+  const getMoreData = () => {
+    setDoneScrollDataLoad(false)
+    if(scrollingData.length >= data.length){
+      setHasMore(false)
+    } else {
+      setScrollIndex(scrollIndex + 1)
+      setScrollingData(scrollingData.concat(splitData[scrollIndex + 1]))
+    }
+    setDoneScrollDataLoad(true)
   }
 
   const handleFormChange = (e) => {
@@ -163,18 +191,32 @@ function ExploreScreen() {
               ))}
             </div>
           ) : (
-            <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64">
-              { data.map((park) => (
-                <ExploreParkCard 
-                  listView={listView} 
-                  name={park.name} 
-                  states={park.states} 
-                  designation={park.designation} 
-                  parkCode={park.parkCode} 
-                  image={park.images[0].url} 
-                />
-              ))}
-            </div>
+              <>
+              <InfiniteScroll
+                dataLength={scrollingData.length}
+                next={getMoreData}
+                hasMore={hasMore}
+                loader={<div className="w-full relative py-16">
+                          <div className="text-center">
+                            <ClipLoader color={"white"} size={100} />
+                          </div>
+                        </div>}
+                className="w-auto h-auto"
+              >
+                <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64 overflow-hidden">
+                  { doneScrollDataLoad && scrollingData.map((park) => (
+                    <ExploreParkCard 
+                      listView={listView}
+                      name={park.name} 
+                      states={park.states} 
+                      designation={park.designation} 
+                      parkCode={park.parkCode} 
+                      image={park.images[0].url} 
+                    />
+                  ))}
+                </div>
+              </InfiniteScroll>
+              </>
           )}
         </div> )
         : 
