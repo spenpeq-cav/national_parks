@@ -84,14 +84,12 @@ function ExploreScreen() {
   }
   
   const getMoreData = () => {
-    setDoneScrollDataLoad(false)
     if(scrollingData.length >= data.length){
       setHasMore(false)
     } else {
       setScrollIndex(scrollIndex + 1)
       setScrollingData(scrollingData.concat(splitData[scrollIndex + 1]))
     }
-    setDoneScrollDataLoad(true)
   }
 
   const handleFormChange = (e) => {

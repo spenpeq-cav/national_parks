@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from 'react';
 import { Link } from "react-router-dom";
 
 function ExploreParkCard(props) {
@@ -9,6 +9,7 @@ function ExploreParkCard(props) {
   const parkCode = props.parkCode;
   const image = props.image;
 
+  const [isLoaded, setIsLoaded] = useState(false)
   return (
     <>
       {listView ? (
@@ -31,9 +32,18 @@ function ExploreParkCard(props) {
         <div className="p-4 w-auto relative h-48 my-6 md:h-56 xl:h-64 2xl:h-80">
           <Link className="" to={`/explore/${parkCode}`}>
             <div className="group w-full h-48 md:h-56 xl:h-64 2xl:h-80">
+              <img 
+                className={isLoaded ? "hidden" : "popular-explore-card-loading object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80"}
+                src={"https://www.arborday.org/images/hero/medium/hero-pine-forest-morning-light.jpg"}
+                // style={{ visibility: isLoaded ? "hidden" : "visible" }}
+              />
               <img
-                className="popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90"
+                onLoad={() =>{
+                  setIsLoaded(true)
+                }}
+                className={isLoaded ? "popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90" : "opacity-0"}
                 src={image}
+                // style={{ opacity: isLoaded ? 0.9 : 0 }}
               />
               <div className="popular-explore-card-text top-6 right-8">
                 {name}

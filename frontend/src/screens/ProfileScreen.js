@@ -97,7 +97,7 @@ function ProfileScreen() {
 
                 </div> 
                 ) : (
-                    <div className="text-center bg-gray-900 mt-24">
+                    <div className="text-center bg-gray-900 mt-24 h-screen">
                         <ClipLoader color={"white"} size={150}/>
                     </div>
                 )}

@@ -52,7 +52,7 @@
     .popular-explore-card {
         @apply rounded-lg shadow-md object-cover 
         border-solid border-2 border-black hover:border-green-600 border-opacity-95
-        hover:shadow-2xl transform group-hover:scale-105 duration-500 active:border-green-900;
+        hover:shadow-2xl transition transform group-hover:scale-105 duration-500 active:border-green-900;
     }
 
     .popular-explore-card-text {
@@ -69,5 +69,10 @@
     .popular-explore-card-text-remove {
         @apply absolute text-red-700 text-opacity-100 font-bold text-base pt-1
         group-hover:text-red-500 transform group-hover:scale-110 duration-500;
+    }
+
+    .popular-explore-card-loading {
+        @apply rounded-lg shadow-md object-cover 
+        border-solid border-2 border-gray-800 border-opacity-80 opacity-80 filter blur animate-pulse;
     }
 }

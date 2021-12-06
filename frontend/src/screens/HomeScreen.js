@@ -7,7 +7,7 @@ function HomeScreen() {
     const { user } = useContext(UserContext);
     
     return (
-        <section className="bg-home-image bg-cover bg-center bg-fixed p-5">
+        <section className="bg-home-image bg-cover bg-center bg-fixed p-5 bg-gray-500">
             <div className="pt-10 max-w-xl mx-auto text-center">
                 <h1 className="mt-6 text-6xl font-bold text-gray-900">Explore America's National Parks</h1>
                 <p className="mt-6 text-gray-900">Explore information on all national parks and services. View activites, ticket fees, parking, and more! Log in to save your favorite parks.</p>
