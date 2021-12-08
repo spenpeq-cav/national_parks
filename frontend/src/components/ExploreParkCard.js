@@ -8,7 +8,7 @@ function ExploreParkCard(props) {
   const designation = props.designation;
   const parkCode = props.parkCode;
   const image = props.image;
-
+  const favorite = props.favorite
   const [isLoaded, setIsLoaded] = useState(false)
   return (
     <>
@@ -21,12 +21,20 @@ function ExploreParkCard(props) {
           <div className="py-4 text-gray-900 text-md font-semibold">
             {designation}
           </div>
-          <Link
-            className="btn bg-yellow-500 bg-opacity-90 transform hover:scale-105 duration-350 py-3 w-32 h-10 text-center text-sm m-auto"
-            to={`/explore/${parkCode}`}
-          >
-            View
-          </Link>
+          <div className="flex">
+            
+            <Link
+              className="btn bg-yellow-500 bg-opacity-90 transform hover:scale-105 duration-350 py-3 w-32 h-10 text-center text-sm m-auto"
+              to={`/explore/${parkCode}`}
+            >
+              View
+            </Link>
+            <div className="pr-6">
+              <div className={favorite ? "star-btn-explore" : "star-btn-explore opacity-0"}><i class="fas fa-star"></i></div>
+            </div>
+            
+          </div>
+          
         </div>
       ) : (
         <div className="p-4 w-auto relative h-48 my-6 md:h-56 xl:h-64 2xl:h-80">

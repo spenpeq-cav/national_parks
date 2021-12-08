@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ClipLoader from "react-spinners/ClipLoader"
 import { stateCodes } from '../constants/stateCodes';
 import ExploreParkCard from '../components/ExploreParkCard';
 import InfiniteScroll from "react-infinite-scroll-component";
+import { UserContext } from "../context/UserContext"
 
 function ExploreScreen() {
   const INITIAL_FORM_STATE = {
@@ -42,6 +43,20 @@ function ExploreScreen() {
   const [scrollingData, setScrollingData] = useState([])
   const [scrollIndex, setScrollIndex] = useState(0)
   const [doneScrollDataLoad, setDoneScrollDataLoad] = useState(false)
+  const { user, setUser } = useContext(UserContext);
+
+  function checkFavorite(parkcode){
+    var fav = false
+    if(user){
+      for(var i = 0; i < user.favorites.length; i++){
+        if(user.favorites[i] === parkcode){
+            fav = true
+            break;
+        }
+      }
+    }
+    return fav
+  }
 
   const getData = async() => {
     setLoaded(false)
@@ -137,6 +152,7 @@ function ExploreScreen() {
     } else {
       localStorage.setItem("explore-form", JSON.stringify(INITIAL_FORM_STATE))
     }
+    console.log("UseEffect Explore")
   }, [formState])
 
   return (
@@ -184,7 +200,8 @@ function ExploreScreen() {
                   name={park.name} 
                   states={park.states} 
                   designation={park.designation} 
-                  parkCode={park.parkCode} 
+                  parkCode={park.parkCode}
+                  favorite={checkFavorite(park.parkCode)} 
                 />
               ))}
             </div>

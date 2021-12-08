@@ -75,4 +75,10 @@
         @apply rounded-lg shadow-md object-cover 
         border-solid border-2 border-gray-800 border-opacity-80 opacity-80 filter blur animate-pulse;
     }
+
+
+    .star-btn-explore {
+        @apply bg-yellow-100 btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full 
+        py-3 w-16 h-full text-center text-2xl;
+    }
 }
