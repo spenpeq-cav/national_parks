@@ -4,6 +4,8 @@ import GoogleMaps from '../components/GoogleMaps';
 import { Link } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader"
 import { UserContext } from '../context/UserContext'
+import TopImage from '../components/ParkScreenComponents/TopImage';
+import ThingsSection from '../components/ParkScreenComponents/ThingsSection';
 
 function ParkScreen({ match }) {
     const [data, setData] = useState([])
@@ -71,14 +73,8 @@ function ParkScreen({ match }) {
             { loaded ? (
                     <section className="bg-black items-center">
 
-                        <div className="w-full text-center bg-black relative">
-                            <img src={data.images[0].url} className="z-1 w-full max-h-screen object-cover opacity-80"/>
-                            <div className="absolute m-auto z-10 w-full text-white text-center top-16 sm:top-24 lg:top-44 xl:top-64 2xl:top-80">
-                                <h1 className="font-bold tracking-wide text-3xl sm:text-5xl md:text-6xl xl:text-7xl px-36 md:px-40">{data.fullName}</h1>
-                                <h2 className="text-md sm:text-lg md:text-xl xl:text-2xl pt-3">{data.designation}</h2>
-                            </div>
-                        </div>
-
+                        <TopImage img={data.images[0].url} fullName={data.fullName} designation={data.designation} />
+                        
                         <div className="w-full lg:text-center bg-black px-16 py-6 md:grid md:grid-cols-2 lg:grid-cols-5 lg:gap-4 2xl:px-56 lg:py-6">
                             <div className="py-2 text-center">
                                 { alreadyAFavorite ? (
@@ -120,41 +116,7 @@ function ParkScreen({ match }) {
                             <p className="text-white text-lg lg:col-span-2">{data.weatherInfo}</p>
                         </div>
 
-                        <div className="bg-gray-200 xl:py-16">
-                            <div className="lg:grid lg:grid-cols-2 xl:py-4 xl:px-24 xl:gap-10">
-                                <img src={data.images[1].url}/>
-                                <div className="py-2 px-4 pt-12 md:px-12">
-                                    <h2 className="text-black text-4xl font-semibold">Activites</h2>
-                                    <h3 className="text-black uppercase py-2 font-semibold">Things to Do</h3>
-                                    <p className="text-black text-md py-4 text-md">
-                                        <ui className="grid grid-cols-2 list-none">
-                                            {data.activities.map((act) => 
-                                            <li key={data.activities.index}>
-                                                - {act.name}
-                                            </li>)}
-                                        </ui>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="lg:grid lg:grid-cols-2 xl:py-4 xl:px-24 xl:gap-10 mt-16">
-                                <div className="py-2 px-4 md:px-12">
-                                    <h2 className="text-black text-4xl font-semibold">Topics</h2>
-                                    <h3 className="text-black uppercase py-2 font-semibold">Things to Learn</h3>
-                                    <p className="text-black text-md py-4">
-                                        <ui className="grid grid-cols-2 list-none">
-                                            {data.topics.map((act) => 
-                                            <li key={data.topics.index}>
-                                                - {act.name}
-                                            </li>)}
-                                        </ui>
-                                    </p>
-                                </div>
-                                
-                                { data.images.length > 2 ? <><img src={data.images[2].url}/></>
-                                    : <><img src={data.images[1].url} /></> }
-                                
-                            </div>
-                        </div>
+                        <ThingsSection data={data} />
 
                         <div className="bg-black p-8 md:p-12 lg:py-12 lg:px-48 xl:px-64">
                             <h2 className="text-gray-100 text-4xl py-2">Directions</h2>
