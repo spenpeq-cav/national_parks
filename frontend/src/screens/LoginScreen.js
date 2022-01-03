@@ -56,7 +56,7 @@ function LoginScreen() {
     }, [])
 
     return (
-        <div className="bg-gray-900 h-screen">
+        <div className="bg-gradient-to-tl from-gray-800 to-gray-900 h-screen">
             <div className="min-h-full flex items-center justify-center pb-36 px-6 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div className="text-center">
