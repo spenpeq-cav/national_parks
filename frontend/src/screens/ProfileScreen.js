@@ -62,14 +62,14 @@ function ProfileScreen() {
         <section className="bg-gray-900 py-16 h-auto">
             { loaded ? (
                 <div className="text-gray-200 px-16">
-                    <h1 className="text-6xl bold text-center text-green-500">Hello, {user.first}!</h1>
-                    <div className="px-10 mt-6 border-2 border-green-500 rounded text-center lg:mx-52 xl:mx-64 2xl:mx-72">
+                    <h1 className="text-6xl font-bold text-center text-green-500">{user.first}'s Profile</h1>
+                    <div className="px-10 mt-6 border-b-2 border-green-500 rounded text-center lg:mx-52 xl:mx-64 2xl:mx-72">
                         <h2 className="text-2xl py-4">Email: {user.username}</h2>
-                        <h2 className="text-2xl pb-4">Name: {user.first} {user.last}</h2>
+                        <h2 className="text-2xl pb-8">Name: {user.first} {user.last}</h2>
                     </div>
                     
                     <div className="text-center pt-6">
-                        <h1 className="text-5xl text-yellow-300 my-2">My Favorite Parks</h1>
+                        <h1 className="text-5xl text-yellow-300 my-2 font-bold">Favorite Parks</h1>
                         <button className={favorites.length > 0 ? "btn btn-other px-4 py-1 my-2 text-xs font-bold" : "hidden"} onClick={() => setRemoveToggled(!removeToggled)}><i class="fas fa-times"></i> Toggle Remove</button>
                         <p className={removeToggled ? "text-xs text-red-500" : "hidden"}>Click a Park to Remove From Favorties.</p>
                     </div>

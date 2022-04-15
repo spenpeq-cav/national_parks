@@ -25,9 +25,9 @@ function Navbar() {
                 <div className="float-right pr-1 divide-x divide-green-400 divide-opacity-75 hidden lg:block">
                     { user ? 
                         <Fragment>
-                            <a className="text-gray-200 px-4 font-semibold text-lg">Welcome, {user.first}</a>
+                            <a className="text-gray-200 px-4 font-semibold text-lg">Logged in: <span className='text-blue-400'>{user.first}</span></a>
                             <Link className="px-4 text-red-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg" onClick={handleLogOut}>Log Out</Link>
-                            <Link className="px-4 text-blue-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg" to="/profile">My Profile</Link> 
+                            <Link className="px-4 text-green-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg" to="/profile">My Profile</Link> 
                         </Fragment> : 
                             <Link className="px-4 text-yellow-300 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg" to="/login">Log In</Link> 
                         }
@@ -42,9 +42,9 @@ function Navbar() {
                 <div className={mobileMenuHidden ? "hidden" : "lg:hidden"}>
                     { user ? 
                         <Fragment>
-                            <a className="text-gray-200 px-4 py-2 block font-semibold text-lg">Welcome, {user.first}</a>
+                            <a className="text-gray-200 px-4 py-2 block font-semibold text-lg">Logged in: <span className='text-blue-400'>{user.first}</span></a>
                             <Link className="px-4 text-red-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg block" onClick={() => {handleLogOut(); toggleMobileMenu()}}>Log Out</Link>
-                            <Link className="px-4 text-blue-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg block" to="/profile" onClick={toggleMobileMenu}>My Profile</Link> 
+                            <Link className="px-4 text-green-400 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg block" to="/profile" onClick={toggleMobileMenu}>My Profile</Link> 
                         </Fragment> : 
                             <Link className="px-4 py-2 text-yellow-300 font-semibold uppercase hover:text-gray-200 tracking-wider text-lg block" to="/login" onClick={toggleMobileMenu}>Log In</Link>
                             }
