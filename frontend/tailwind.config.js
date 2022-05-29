@@ -1,22 +1,11 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     extend: {
       backgroundImage: {
         'home-image': "url('/src/images/home-background-image.jpg')",
         'explore-image': "url('https://wgno.com/wp-content/uploads/sites/2/2020/04/hypatia-h_d43cebf10258e14c41633c59f595bf83-h_6cae19e7bbd593cbd356f248fec73a8c.jpg?w=2072&h=1166&crop=1')",
       },
-    },
-  },
-  variants: {
-    extend: {
-      backgroundColor: ['active', 'checked'],
-      textColor: ['active'],
-      animation: ['motion-safe'],
-      transform: ['hover', 'active', 'focus', 'motion-safe'],
-      scale: ['group-hover'],
-      borderColor: ['active', 'checked'],
     },
   },
   plugins: [],
