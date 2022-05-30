@@ -39,7 +39,7 @@
 
     .popular-home-card {
         @apply rounded-lg shadow-md object-cover 
-        border-solid border-4 border-black hover:border-green-600 border-opacity-95
+        border-solid border-2 border-black hover:border-green-600 border-opacity-95
         hover:shadow-2xl transform group-hover:scale-105 duration-500 active:border-green-900;
     }
 
