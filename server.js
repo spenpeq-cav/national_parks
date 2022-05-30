@@ -104,6 +104,17 @@ app.get("/park_data_popular", async function (req, res) {
   res.send(data);
 });
 
+app.get("/park_data", async function (req, res) {
+  const parkCode = req.query.parkCode;
+  const endpoint_url = "/parks?parkCode=" + parkCode;
+  const url = base_nps_url + endpoint_url + api_url;
+
+  const nps_res = await axios.get(url);
+  const data = nps_res.data.data;
+
+  res.send(data);
+});
+
 app.post("/checkFavorite", function (req, res) {
   var alreadyAFavorite = false;
   const parkcode = req.body.parkcode;
