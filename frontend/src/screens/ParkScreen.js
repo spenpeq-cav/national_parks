@@ -16,11 +16,6 @@ function ParkScreen({ match }) {
 
   const parkcode = match.params.parkcode;
 
-  const base_url = "https://developer.nps.gov/api/v1";
-  const endpoint_url =
-    "/parks?parkCode=" + parkcode + "&api_key=" + process.env.REACT_APP_API_KEY;
-  const url = base_url + endpoint_url;
-
   const getData = async () => {
     const res = await axios.get("/park_data", {
       params: { parkCode: parkcode },
@@ -29,7 +24,6 @@ function ParkScreen({ match }) {
     const data = res.data[0];
     setData(data);
     setLoaded(true);
-    console.log("Got data");
   };
 
   function checkFavorite() {
