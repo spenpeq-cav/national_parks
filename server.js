@@ -115,6 +115,23 @@ app.get("/park_data", async function (req, res) {
   res.send(data);
 });
 
+app.get("/park_data_explore", async (req, res) => {
+  const searchQuery = req.query.searchQuery;
+  const state = req.query.state;
+
+  if (searchQuery !== "") {
+    var endpoint_url = `/parks?stateCode=${state}&limit=999&q=${searchQuery}${api_url}`;
+  } else {
+    var endpoint_url = `/parks?stateCode=${state}&limit=999${api_url}`;
+  }
+  const url = base_nps_url + endpoint_url;
+
+  const dataResponse = await axios.get(url);
+  const data = dataResponse.data.data;
+
+  res.send(data);
+});
+
 app.post("/checkFavorite", function (req, res) {
   var alreadyAFavorite = false;
   const parkcode = req.body.parkcode;

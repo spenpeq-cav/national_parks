@@ -61,18 +61,12 @@ function ExploreScreen() {
   const getData = async() => {
     setLoaded(false)
     setScrollIndex(0)
-    const base_url = 'https://developer.nps.gov/api/v1'
-    // var endpoint_url = ''
-    if(searchQuery !== ""){
-      var endpoint_url = '/parks?stateCode='+ state + '&limit=999' + '&q='+ searchQuery +'&api_key=' + process.env.REACT_APP_API_KEY
-    }else {
-      var endpoint_url = '/parks?stateCode='+ state + '&limit=999' +'&api_key=' + process.env.REACT_APP_API_KEY
-    }
-    var url = base_url + endpoint_url
-    
-    const res = await axios.get(url)
-    var data = res.data.data
 
+    const res = await axios.get("/park_data_explore", {
+      params: { searchQuery: searchQuery, state: state },
+    });
+    var data = res.data
+    
     if(filterNPOnly){
       var filteredData = []
       for(var i = 0; i < data.length; i++){
