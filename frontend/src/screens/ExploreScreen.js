@@ -72,7 +72,7 @@ function ExploreScreen() {
     setLoaded(false);
     setScrollIndex(0);
 
-    const res = await axios.get("/park_data_explore", {
+    const res = await axios.get("/parks/explore", {
       params: { searchQuery: searchQuery, state: state },
     });
     var data = res.data;

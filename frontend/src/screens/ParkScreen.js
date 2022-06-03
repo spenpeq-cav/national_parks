@@ -17,10 +17,7 @@ function ParkScreen({ match }) {
   const parkcode = match.params.parkcode;
 
   const getData = async () => {
-    const res = await axios.get("/park_data", {
-      params: { parkCode: parkcode },
-    });
-
+    const res = await axios.get(`/parks/${parkcode}`);
     const data = res.data[0];
     setData(data);
     setLoaded(true);

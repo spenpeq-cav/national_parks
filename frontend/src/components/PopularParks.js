@@ -9,10 +9,12 @@ function PopularParks() {
   const [loaded, setLoaded] = useState(false);
 
   const getPopularData = async () => {
-    const res = await axios.get("/park_data_popular");
+    const res = await axios.get(`/parks/popular`);
     const data = res.data;
-    setPopularParkData(data);
-    setLoaded(true);
+    if (data.length !== 0) {
+      setPopularParkData(data);
+      setLoaded(true);
+    }
   };
 
   useEffect(() => {

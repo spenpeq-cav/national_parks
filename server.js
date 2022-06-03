@@ -8,10 +8,9 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const { authenticate } = require("passport");
 const axios = require("axios");
 
-const PORT = process.env.PORT || 3001;
+const parkDataRouter = require("./server-files/routes/parkData.router");
 
-const base_nps_url = "https://developer.nps.gov/api/v1";
-const api_url = "&api_key=" + process.env.NPS_API_KEY;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -59,6 +58,8 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use("/parks", parkDataRouter)
+
 app.get("/api", (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ message: "Authenticated!" });
@@ -90,46 +91,6 @@ app.get("/logout", function (req, res) {
     expires: new Date(1),
   });
   req.session.destroy();
-});
-
-app.get("/park_data_popular", async function (req, res) {
-  const popularParkCodes = "yose,grca,yell";
-
-  const endpoint_url = "/parks?parkCode=" + popularParkCodes;
-  const url = base_nps_url + endpoint_url + api_url;
-
-  const nps_res = await axios.get(url);
-  const data = nps_res.data.data;
-
-  res.send(data);
-});
-
-app.get("/park_data", async function (req, res) {
-  const parkCode = req.query.parkCode;
-  const endpoint_url = "/parks?parkCode=" + parkCode;
-  const url = base_nps_url + endpoint_url + api_url;
-
-  const nps_res = await axios.get(url);
-  const data = nps_res.data.data;
-
-  res.send(data);
-});
-
-app.get("/park_data_explore", async (req, res) => {
-  const searchQuery = req.query.searchQuery;
-  const state = req.query.state;
-
-  if (searchQuery !== "") {
-    var endpoint_url = `/parks?stateCode=${state}&limit=999&q=${searchQuery}${api_url}`;
-  } else {
-    var endpoint_url = `/parks?stateCode=${state}&limit=999${api_url}`;
-  }
-  const url = base_nps_url + endpoint_url;
-
-  const dataResponse = await axios.get(url);
-  const data = dataResponse.data.data;
-
-  res.send(data);
 });
 
 app.post("/checkFavorite", function (req, res) {
