@@ -35,7 +35,7 @@ function ParkScreen({ match }) {
   const handleAddOrRemoveFavorite = () => {
     if (user && alreadyAFavorite === false) {
       axios
-        .post("/favoriteAddOrRemove", {
+        .post("/favorites/addOrRemove", {
           parkCode: parkcode,
           alreadyAFavorite: false,
         })
