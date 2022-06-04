@@ -30,7 +30,7 @@ function ProfileScreen() {
 
     function handleRemoveFavorite (parkcode){
         if(removeToggled){
-            axios.post("/favoriteAddOrRemove", { parkCode: parkcode, alreadyAFavorite: true})
+            axios.post("/favorites/addOrRemove", { parkCode: parkcode, alreadyAFavorite: true})
                 .then((res) =>{
                     console.log("Removed")
                     console.log(res)

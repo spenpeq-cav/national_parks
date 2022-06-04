@@ -8,7 +8,9 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const { authenticate } = require("passport");
 const axios = require("axios");
 
+const User = require("./server-files/models/user.models");
 const parkDataRouter = require("./server-files/routes/parkData.router");
+const favoritesRouter = require("./server-files/routes/favorites.router");
 
 const PORT = process.env.PORT || 3001;
 
@@ -42,23 +44,12 @@ mongoose.connect(
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
-const userSchema = new mongoose.Schema({
-  first: String,
-  last: String,
-  email: String,
-  password: String,
-  favorites: [String],
-});
-
-userSchema.plugin(passportLocalMongoose);
-
-const User = new mongoose.model("User", userSchema);
-
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use("/parks", parkDataRouter)
+app.use("/parks", parkDataRouter);
+app.use("/favorites", favoritesRouter);
 
 app.get("/api", (req, res) => {
   if (req.isAuthenticated()) {
