@@ -31,7 +31,7 @@ function LoginScreen() {
         e.preventDefault();
 
         if (formData.username !== "" && formData.password !== "") {
-                axios.post("/login", formData, {withCredentials: true})
+                axios.post("/user/login", formData, {withCredentials: true})
                     .then((res) => {
                         if(res.data.user !== undefined){
                             setUser(res.data.user)
