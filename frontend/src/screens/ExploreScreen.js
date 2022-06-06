@@ -53,6 +53,7 @@ function ExploreScreen() {
   const [scrollingData, setScrollingData] = useState([]);
   const [scrollIndex, setScrollIndex] = useState(0);
   const [doneScrollDataLoad, setDoneScrollDataLoad] = useState(false);
+  const [noResults, setNoResults] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
   function checkFavorite(parkcode) {
@@ -71,6 +72,7 @@ function ExploreScreen() {
   const getData = async () => {
     setLoaded(false);
     setScrollIndex(0);
+    setNoResults(false);
 
     const res = await axios.get("/parks/explore", {
       params: { searchQuery: searchQuery, state: state },
@@ -87,19 +89,23 @@ function ExploreScreen() {
       data = filteredData;
     }
 
-    const splitArray = [];
-    const chunkSize = 6;
-    for (var i = 0; i < data.length; i += chunkSize) {
-      const chunk = data.slice(i, i + chunkSize);
-      splitArray.push(chunk);
+    if (data.length === 0) {
+      setNoResults(true);
+    } else {
+      const splitArray = [];
+      const chunkSize = 6;
+      for (var i = 0; i < data.length; i += chunkSize) {
+        const chunk = data.slice(i, i + chunkSize);
+        splitArray.push(chunk);
+      }
+      setSplitData(splitArray);
+      setScrollingData(splitArray[0]);
+      setDoneScrollDataLoad(true);
+      setHasMore(true);
     }
-    setSplitData(splitArray);
-    setScrollingData(splitArray[0]);
-    setDoneScrollDataLoad(true);
     setData(data);
     setLoaded(true);
     console.log("Got data");
-    setHasMore(true);
   };
 
   const getMoreData = () => {
@@ -233,60 +239,67 @@ function ExploreScreen() {
           </span>
         </label>
       </div>
-
-      {loaded ? (
-        <div>
-          {listView ? (
-            <div className="">
-              {data.map((park) => (
-                <ExploreParkCard
-                  listView={listView}
-                  name={park.name}
-                  states={park.states}
-                  designation={park.designation}
-                  parkCode={park.parkCode}
-                  favorite={checkFavorite(park.parkCode)}
-                />
-              ))}
+      {noResults ? (
+        <h1 className="text-gray-50 text-center font-bold text-3xl pt-4">
+          No Results
+        </h1>
+      ) : (
+        <>
+          {loaded ? (
+            <div>
+              {listView ? (
+                <div className="">
+                  {data.map((park) => (
+                    <ExploreParkCard
+                      listView={listView}
+                      name={park.name}
+                      states={park.states}
+                      designation={park.designation}
+                      parkCode={park.parkCode}
+                      favorite={checkFavorite(park.parkCode)}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <InfiniteScroll
+                    dataLength={scrollingData.length}
+                    next={getMoreData}
+                    hasMore={hasMore}
+                    loader={
+                      <div className="w-full relative py-16">
+                        <div className="text-center">
+                          <ClipLoader color={"white"} size={100} />
+                        </div>
+                      </div>
+                    }
+                    className="w-auto h-auto"
+                  >
+                    <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64 overflow-hidden">
+                      {doneScrollDataLoad &&
+                        scrollingData.map((park) => (
+                          <ExploreParkCard
+                            listView={listView}
+                            name={park.name}
+                            states={park.states}
+                            designation={park.designation}
+                            parkCode={park.parkCode}
+                            image={park.images[0].url}
+                          />
+                        ))}
+                    </div>
+                  </InfiniteScroll>
+                </>
+              )}
             </div>
           ) : (
-            <>
-              <InfiniteScroll
-                dataLength={scrollingData.length}
-                next={getMoreData}
-                hasMore={hasMore}
-                loader={
-                  <div className="w-full relative py-16">
-                    <div className="text-center">
-                      <ClipLoader color={"white"} size={100} />
-                    </div>
-                  </div>
-                }
-                className="w-auto h-auto"
-              >
-                <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64 overflow-hidden">
-                  {doneScrollDataLoad &&
-                    scrollingData.map((park) => (
-                      <ExploreParkCard
-                        listView={listView}
-                        name={park.name}
-                        states={park.states}
-                        designation={park.designation}
-                        parkCode={park.parkCode}
-                        image={park.images[0].url}
-                      />
-                    ))}
-                </div>
-              </InfiniteScroll>
-            </>
+            <div className="w-full relative py-16">
+              <div className="text-center">
+                <ClipLoader color={"white"} size={150} />
+              </div>
+            </div>
           )}
-        </div>
-      ) : (
-        <div className="w-full relative py-16">
-          <div className="text-center">
-            <ClipLoader color={"white"} size={150} />
-          </div>
-        </div>
+        </>
       )}
     </section>
   );

@@ -28,7 +28,7 @@ function RegisterScreen() {
     function handleSubmitForm(e) {
         e.preventDefault();
         if (formData.username !== "" && formData.password !== "") {
-                axios.post("/register", formData, {withCredentials: true})
+                axios.post("/user/register", formData, {withCredentials: true})
                     .then((res) => {
                         
                         if(res.data.username !== undefined){ 
