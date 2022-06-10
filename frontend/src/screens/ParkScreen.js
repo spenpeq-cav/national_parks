@@ -57,6 +57,10 @@ function ParkScreen({ match }) {
     }
   };
 
+  const handleAddVisitedClicked = () => {
+    console.log("Add visited");
+  };
+
   useEffect(() => {
     if (!loaded) {
       getData();
@@ -91,16 +95,27 @@ function ParkScreen({ match }) {
               ) : (
                 <div>
                   <button
-                    className="btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl"
+                    className="flex btn border border-yellow-400 text-yellow-400 font-semibold rounded-20 py-2 w-full h-full text-center text-3xl justify-center items-center"
                     onClick={() => handleAddOrRemoveFavorite()}
                   >
-                    <i class="far fa-star"></i>
+                    <i class="far fa-star text-2xl"></i>
+                    <p className="flex text-sm pl-2 justify-center">
+                      Add Favorite
+                    </p>
                   </button>
-                  <p className="text-yellow-400 font-medium text-sm">
-                    Add Favorite
-                  </p>
                 </div>
               )}
+              <div className="py-2">
+                <button
+                  className="flex btn border border-yellow-400 text-yellow-400 font-semibold rounded-20 py-2 w-full h-full text-center text-3xl justify-center items-center"
+                  onClick={() => handleAddVisitedClicked()}
+                >
+                  <i class="fa-solid fa-person-hiking text-2xl"></i>
+                  <p className="flex text-sm pl-4 justify-center">
+                    Add Visited
+                  </p>
+                </button>
+              </div>
             </div>
             <div className="py-2">
               <h1 className="text-white text-lg uppercase font-bold">
