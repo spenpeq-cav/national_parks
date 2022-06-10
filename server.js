@@ -4,11 +4,14 @@ const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
 
+const mongoose = require("./server-files/database/database.config");
+
 const User = require("./server-files/models/user.models");
+
+const userRouter = require("./server-files/routes/user.router");
 const parkDataRouter = require("./server-files/routes/parkData.router");
 const favoritesRouter = require("./server-files/routes/favorites.router");
-const userRouter = require("./server-files/routes/user.router");
-const mongoose = require("./server-files/database/database.config");
+const visitedRouter = require("./server-files/routes/visited.router");
 
 const PORT = process.env.PORT || 3001;
 
@@ -38,9 +41,10 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use("/user", userRouter);
 app.use("/parks", parkDataRouter);
 app.use("/favorites", favoritesRouter);
-app.use("/user", userRouter);
+app.use("/visited", visitedRouter);
 
 app.get("/api", (req, res) => {
   if (req.isAuthenticated()) {
