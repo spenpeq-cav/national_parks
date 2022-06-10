@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 
@@ -9,6 +8,7 @@ const User = require("./server-files/models/user.models");
 const parkDataRouter = require("./server-files/routes/parkData.router");
 const favoritesRouter = require("./server-files/routes/favorites.router");
 const userRouter = require("./server-files/routes/user.router");
+const mongoose = require("./server-files/database/database.config");
 
 const PORT = process.env.PORT || 3001;
 
@@ -33,14 +33,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-const DB_PASS = process.env.DB_PASS;
-mongoose.connect(
-  "mongodb+srv://spenUser:" +
-    DB_PASS +
-    "@cluster0.jneic.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
 
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
