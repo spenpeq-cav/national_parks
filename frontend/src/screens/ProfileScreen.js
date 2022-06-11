@@ -9,8 +9,11 @@ function ProfileScreen() {
   const { user, setUser } = useContext(UserContext);
   const history = useHistory();
   const [loaded, setLoaded] = useState(false);
+  const [visitedLoaded, setVisitedLoaded] = useState(false);
   const [favorites, setFavorites] = useState(user.favorites);
   const [favoritesData, setFavoritesData] = useState([]);
+  const [visited, setVisited] = useState(user.visited);
+  const [visitedData, setVisitedData] = useState([]);
   const [removeToggled, setRemoveToggled] = useState(false);
 
   const getUserFavoritesParkData = async () => {
@@ -57,9 +60,34 @@ function ProfileScreen() {
     }
   }
 
+  const getUserVisitedParkData = async () => {
+    const visitedParksString = visited.toString();
+
+    const base_url = "https://developer.nps.gov/api/v1";
+    const endpoint_url =
+      "/parks?parkCode=" +
+      visitedParksString +
+      "&api_key=" +
+      process.env.REACT_APP_API_KEY;
+    const url = base_url + endpoint_url;
+
+    const res = await axios.get(url);
+    const data = res.data.data;
+
+    setVisitedData(data);
+    setVisitedLoaded(true);
+  };
+
+  function handleRemoveVisited(parkcode) {
+    if (removeToggled) {
+      console.log(parkcode);
+    }
+  }
+
   useEffect(() => {
     if (user) {
       getUserFavoritesParkData();
+      getUserVisitedParkData();
     } else {
       history.push("/login");
     }
@@ -81,9 +109,6 @@ function ProfileScreen() {
           </div>
 
           <div className="text-center pt-6">
-            <h1 className="text-5xl text-yellow-300 my-2 font-bold">
-              Favorite Parks
-            </h1>
             <button
               className={
                 favorites.length > 0
@@ -95,8 +120,11 @@ function ProfileScreen() {
               <i class="fas fa-times"></i> Toggle Remove
             </button>
             <p className={removeToggled ? "text-xs text-red-500" : "hidden"}>
-              Click a Park to Remove From Favorties.
+              Click a Park to Remove from your lists.
             </p>
+            <h1 className="text-5xl text-yellow-300 my-2 font-bold">
+              Favorite Parks
+            </h1>
           </div>
 
           {user.favorites.length > 0 ? (
@@ -114,7 +142,7 @@ function ProfileScreen() {
                     <div
                       className={
                         removeToggled
-                          ? "group w-full h-48 md:h-56 xl:h-64 2xl:h-80 bg-red-600"
+                          ? "group w-full h-48 md:h-56 xl:h-64 2xl:h-80 bg-red-600 rounded-lg"
                           : "group w-full h-48 md:h-56 xl:h-64 2xl:h-80"
                       }
                     >
@@ -149,6 +177,74 @@ function ProfileScreen() {
                 to="/explore"
               >
                 Add Favorites
+              </Link>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="text-center bg-gray-900 mt-24 h-screen">
+          <ClipLoader color={"white"} size={150} />
+        </div>
+      )}
+
+      {visitedLoaded ? (
+        <div className="text-gray-200 px-16">
+          <div className="text-center pt-6">
+            <h1 className="text-5xl text-yellow-300 my-2 font-bold">
+              Visited Parks
+            </h1>
+          </div>
+
+          {user.visited.length > 0 ? (
+            <div className="lg:grid lg:grid-cols-3 xl:px-14 2xl:px-64">
+              {visitedData.map((park) => (
+                <div
+                  key={visitedData.id}
+                  className="p-4 w-auto relative h-48 my-4 md:h-56 xl:h-64 2xl:h-80"
+                >
+                  <Link
+                    className=""
+                    to={removeToggled ? "#" : `/explore/${park.parkCode}`}
+                    onClick={() => handleRemoveVisited(park.parkCode)}
+                  >
+                    <div
+                      className={
+                        removeToggled
+                          ? "group w-full h-48 md:h-56 xl:h-64 2xl:h-80 bg-red-600 rounded-lg"
+                          : "group w-full h-48 md:h-56 xl:h-64 2xl:h-80"
+                      }
+                    >
+                      <img
+                        className={
+                          removeToggled
+                            ? "popular-explore-card-remove object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-80"
+                            : "popular-explore-card object-cover w-full h-48 md:h-56 xl:h-64 2xl:h-80 opacity-90"
+                        }
+                        src={park.images[0].url}
+                      />
+                      <div
+                        className={
+                          removeToggled
+                            ? "popular-explore-card-text-remove top-6 right-8"
+                            : "popular-explore-card-text top-6 right-8"
+                        }
+                      >
+                        {park.name}
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center">
+              <h1 className="text-xl py-2">You have no visited parks yet!</h1>
+              <h1 className="text-xl">Explore parks to add some!</h1>
+              <Link
+                className="btn btn-other px-6 py-4 xl:px-8 xl:py-6 my-6 font-bold"
+                to="/explore"
+              >
+                Add Visited
               </Link>
             </div>
           )}
