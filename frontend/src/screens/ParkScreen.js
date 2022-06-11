@@ -11,6 +11,7 @@ function ParkScreen({ match }) {
   const [data, setData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [alreadyAFavorite, setAlreadyAFavorite] = useState(false);
+  const [alreadyVisited, setAlreadyVisited] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const { user, setUser } = useContext(UserContext);
 
@@ -31,6 +32,15 @@ function ParkScreen({ match }) {
       }
     }
   }
+
+  const checkVisited = () => {
+    for (const park of user.visited) {
+      if (park === parkcode) {
+        setAlreadyVisited(true);
+        break;
+      }
+    }
+  };
 
   const handleAddOrRemoveFavorite = () => {
     if (user && alreadyAFavorite === false) {
@@ -58,7 +68,27 @@ function ParkScreen({ match }) {
   };
 
   const handleAddVisitedClicked = () => {
-    console.log("Add visited");
+    if (user && alreadyVisited === false) {
+      axios
+        .put("/visited/add", {
+          pc: parkcode,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      if (!alreadyVisited) {
+        setUser((prevState) => ({
+          ...prevState,
+          visited: [...prevState.visited, parkcode],
+        }));
+      }
+      console.log("Add visited");
+      setAlreadyVisited(true);
+    }
   };
 
   useEffect(() => {
@@ -67,9 +97,10 @@ function ParkScreen({ match }) {
     }
     if (user) {
       checkFavorite();
+      checkVisited();
     }
     console.log("useEffect");
-  }, [alreadyAFavorite, user]);
+  }, [alreadyVisited, alreadyAFavorite, user]);
 
   return (
     <div>
@@ -87,9 +118,10 @@ function ParkScreen({ match }) {
                 <div>
                   <Link
                     to="/profile"
-                    className="bg-yellow-100 btn border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transform hover:scale-105 duration-500 py-3 w-24 h-full text-center text-3xl"
+                    className="bg-yellow-100 flex btn border border-yellow-400 text-yellow-700 font-semibold rounded-20 py-2 w-full h-full text-center text-3xl justify-center items-center"
                   >
-                    <i class="fas fa-star"></i>
+                    <i class="far fa-star text-2xl"></i>
+                    <p className="flex text-sm pl-2 justify-center">Favorite</p>
                   </Link>
                 </div>
               ) : (
@@ -105,18 +137,36 @@ function ParkScreen({ match }) {
                   </button>
                 </div>
               )}
+
               <div className="py-2">
-                <button
-                  className="flex btn border border-yellow-400 text-yellow-400 font-semibold rounded-20 py-2 w-full h-full text-center text-3xl justify-center items-center"
-                  onClick={() => handleAddVisitedClicked()}
-                >
-                  <i class="fa-solid fa-person-hiking text-2xl"></i>
-                  <p className="flex text-sm pl-4 justify-center">
-                    Add Visited
-                  </p>
-                </button>
+                {alreadyVisited ? (
+                  <div>
+                    <Link
+                      to="/profile"
+                      className="bg-yellow-100 flex btn border border-yellow-400 text-yellow-900 font-semibold rounded-20 py-2 w-full h-full text-center text-3xl justify-center items-center"
+                    >
+                      <i class="fa-solid fa-person-hiking text-2xl"></i>
+                      <p className="flex text-sm pl-4 justify-center">
+                        Visited
+                      </p>
+                    </Link>
+                  </div>
+                ) : (
+                  <div>
+                    <button
+                      className="flex btn border border-yellow-400 text-yellow-400 font-semibold rounded-20 py-2 w-full h-full text-center text-3xl justify-center items-center"
+                      onClick={() => handleAddVisitedClicked()}
+                    >
+                      <i class="fa-solid fa-person-hiking text-2xl"></i>
+                      <p className="flex text-sm pl-4 justify-center">
+                        Add Visited
+                      </p>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
+
             <div className="py-2">
               <h1 className="text-white text-lg uppercase font-bold">
                 Location
