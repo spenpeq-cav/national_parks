@@ -83,6 +83,7 @@ function userLogin(req, res, next) {
             first: user.first,
             last: user.last,
             favorites: user.favorites,
+            visited: user.visited,
           },
         });
       });

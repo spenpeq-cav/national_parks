@@ -7,7 +7,7 @@ const {
 
 const visitedRouter = express.Router();
 
-visitedRouter.patch("/add", addVisited);
+visitedRouter.put("/add", addVisited);
 visitedRouter.patch("/remove", removeVisited);
 
 module.exports = visitedRouter;
