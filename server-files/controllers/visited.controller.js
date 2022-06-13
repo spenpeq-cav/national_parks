@@ -25,11 +25,26 @@ function addVisited(req, res) {
 }
 
 function removeVisited(req, res) {
-  //TODO
   const pc = req.body.pc;
-  console.log("Remove visited");
-  console.log(pc);
-  return res.json({ code: pc });
+  if (req.isAuthenticated()) {
+    User.findById(req.user._id, (err, user) => {
+      if (err) {
+        console.log(err);
+        return res.send(err);
+      } else {
+        User.findByIdAndUpdate(
+          req.user._id,
+          { $pull: { visited: pc } },
+          { upsert: true, new: true },
+          function (err, model) {
+            console.log(err);
+          }
+        );
+      }
+    });
+  } else {
+    return res.send("Not authenticated. Please Log in");
+  }
 }
 
 module.exports = {

@@ -82,7 +82,24 @@ function ProfileScreen() {
 
   function handleRemoveVisited(parkcode) {
     if (removeToggled) {
-      console.log(parkcode);
+      axios
+        .patch("/visited/remove", {
+          pc: parkcode,
+        })
+        .then((res) => {
+          console.log("Removed");
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      var filteredVisited = user.visited.filter((park) => park !== parkcode);
+      setUser((prevState) => ({
+        ...prevState,
+        visited: filteredVisited,
+      }));
+      setVisited(filteredVisited);
     }
   }
 
